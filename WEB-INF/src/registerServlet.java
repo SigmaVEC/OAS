@@ -8,7 +8,7 @@ public class registerServlet extends HttpServlet{
         res.setContentType("application/json");//setting the content type
         PrintWriter out=res.getWriter();//get the stream to write the data
 
-        String userId = req.getParameter("userid");
+        String userId = req.getParameter("userId");
         String name = req.getParameter("name");
         String role = req.getParameter("role");
         String password = req.getParameter("password");

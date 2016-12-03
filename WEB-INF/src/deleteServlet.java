@@ -8,7 +8,7 @@ public class deleteServlet extends HttpServlet{
         res.setContentType("application/json");//setting the content type
         PrintWriter out=res.getWriter();//get the stream to write the data
 
-        String userId = req.getParameter("userid");
+        String userId = req.getParameter("userId");
 
         JSONObject jo = new JSONObject();
         HttpSession session = req.getSession(true);

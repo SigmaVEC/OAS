@@ -38,26 +38,26 @@
             <form class="ui form">
               <div class="field">
                 <div class="ui corner labeld input">
-                  <input type="text" placeholder="User Id" name="id">
+                  <input type="text" id="newUserId" placeholder="User Id" name="id">
                   <div class="ui corner black label"><i class="user inverted grey icon"></i></div>
                 </div>
 
               </div>
               <div class="field">
                 <div class="ui corner labeld input">
-                  <input type="text" placeholder="Name..." name="name">
+                  <input type="text" id="newName" placeholder="Name..." name="name">
                   <div class="ui corner black label"><i class="user inverted grey icon"></i></div>
                 </div>
 
               </div>
               <div class="field">
-                <div class="ui fluid search selection dropdown">
+                <div class="ui fluid search selection dropdown" id="newDropdown">
                   <i class="dropdown icon"></i>
                   <div class="default text">Select Type Of User</div>
                   <div class="menu">
-                      <div class="item" data-value="ad">Admin</div>
-                      <div class="item" data-value="hd">Hod</div>
-                      <div class="item" data-value="fc">Faculty</div>
+                      <div class="item" data-value="admin">Admin</div>
+                      <div class="item" data-value="hod">Hod</div>
+                      <div class="item" data-value="faculty">Faculty</div>
                   </div>
                 </div>
 
@@ -66,19 +66,19 @@
             <div class="field">
                 <div class ="ui right labeld input">
                   <div class="ui large label">+91</div>
-                    <input name="phn" placeholder="Number" type="text">
+                    <input name="phn" id="newPhNo" placeholder="Number" type="text">
                 </div>
             </div>
             <div class="field">
               <div class="ui corner labeld input">
-                <input type="text" placeholder="email-id" name="email">
+                <input type="text" id="newEmail" placeholder="email-id" name="email">
                 <div class="ui corner black label"><i class="mail inverted grey icon"></i></div>
               </div>
 
             </div>
 
             <div class="fluid ui buttons">
-              <button class="ui green button">Add User</button>
+              <button class="ui green button" id="btnNewUser">Add User</button>
               <div class="or"></div>
               <button class="ui red button">Cancel</button>
             </div>
@@ -97,26 +97,26 @@
             <form class="ui form">
               <div class="field">
                 <div class="ui corner labeld input">
-                  <input type="text" placeholder="User Id" name="id">
+                  <input type="text" id="updateUserId" placeholder="User Id" name="id">
                   <div class="ui corner black label"><i class="user inverted grey icon"></i></div>
                 </div>
 
               </div>
               <div class="field">
                 <div class="ui corner labeld input">
-                  <input type="text" placeholder="Name..." name="name">
+                  <input type="text" id="updateName" placeholder="Name..." name="name">
                   <div class="ui corner black label"><i class="user inverted grey icon"></i></div>
                 </div>
 
               </div>
               <div class="field">
-                <div class="ui fluid search selection dropdown">
+                <div class="ui fluid search selection dropdown" id="updateDropdown">
                   <i class="dropdown icon"></i>
                   <div class="default text">Select Type Of User</div>
                   <div class="menu">
-                      <div class="item" data-value="ad">Admin</div>
-                      <div class="item" data-value="hd">Hod</div>
-                      <div class="item" data-value="fc">Faculty</div>
+                      <div class="item" data-value="admin">Admin</div>
+                      <div class="item" data-value="hod">Hod</div>
+                      <div class="item" data-value="faculty">Faculty</div>
                   </div>
                 </div>
 
@@ -125,19 +125,19 @@
             <div class="field">
                 <div class ="ui right labeld input">
                   <div class="ui large label">+91</div>
-                    <input name="phn" placeholder="Number" type="text">
+                    <input name="phn" id="updatePhNo" placeholder="Number" type="text">
                 </div>
             </div>
             <div class="field">
               <div class="ui corner labeld input">
-                <input type="text" placeholder="email-id" name="email">
+                <input type="text" id="updateEmail" placeholder="email-id" name="email">
                 <div class="ui corner black label"><i class="mail inverted grey icon"></i></div>
               </div>
 
             </div>
 
             <div class="fluid ui buttons">
-              <button class="ui green button">Update User</button>
+              <button class="ui green button" id="btnUpdateUser">Update User</button>
               <div class="or"></div>
               <button class="ui red button">Cancel</button>
             </div>
@@ -156,13 +156,13 @@
             <form class="ui form">
               <div class="field">
                 <div class="ui corner labeld input">
-                  <input type="text" placeholder="User Id" name="id">
+                  <input type="text" id="deleteUserId" placeholder="User Id" name="id">
                   <div class="ui corner black label"><i class="user inverted grey icon"></i></div>
                 </div>
 
               </div>
             <div class="fluid ui buttons">
-              <button class="ui green button">Delete User</button>
+              <button class="ui green button" id="btnDeleteUser" >Delete User</button>
               <div class="or"></div>
               <button class="ui red button">Cancel</button>
             </div>
@@ -190,6 +190,41 @@ var hgt = height*0.15;
 $('.margin').height(hgt);
 
 $('.tabular.menu .item').tab();
+</script>
+<script>
+    $("#btnNewUser").on("click", function(){
+        var role = $("#newDropdown").dropdown('get value');
+        var userId = $("#newUserId").val();
+        var name = $("#newName").val();
+        var phno = $("#newPhNo").val();
+        var email = $("#newEmail").val();
+        var password = $("#newName").val(); //TODO: insert a password and change it
+        console.log("new clicked");
+        $.get("/OAS/register",{userId:userId, name:name, password:password, mobile:phno, email:email, role:role, mode:"insert"},function(result){
+            console.log(result);
+        });
+    });
+    $("#btnUpdateUser").on("click", function(){
+        var role = $("#updateDropdown").dropdown('get value');
+        var userId = $("#updateUserId").val();
+        var name = $("#updateName").val();
+        var phno = $("#updatePhNo").val();
+        var email = $("#updateEmail").val();
+        var password = $("#updateName").val(); //TODO: insert a password and change it
+        console.log("update clicked");
+        $.get("/OAS/register",{userId:userId, name:name, password:password, mobile:phno, email:email, role:role, mode:"update"},function(result){
+            console.log(result);
+        });
+    });
+    $("#btnDeleteUser").on("click",function(){
+        var userId = $("#deleteUserId").val();
+        $.get("/OAS/delete",{userId:userId},function(result){
+            console.log(result);
+        });
+    });
+    $(".form").submit(function(e){
+        e.preventDefault();
+    });
 </script>
 </body>
 </html>
