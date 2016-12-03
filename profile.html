@@ -1,0 +1,136 @@
+<!DOCTYPE Html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Course</title>
+
+  <link rel="stylesheet" href="css/semantic.min.css"></link>
+  <link rel="stylesheet" href="css/semantic.css"></link>
+<style>
+
+</style>
+</head>
+<body>
+<div class="ui container">
+  <div class="ui stackable grey inverted top fixed huge labeld icon menu">
+    <div class="item">Profile</div>
+    <div class="right icon menu">
+      <a class="item">
+        <i class="large red inverted sign out icon"></i>SignOut
+      </a>
+    </div>
+  </div>
+
+<!-- nav bar-->
+<div class="margin"></div>
+<div class="ui padded grid">
+  <div class="ui container"><h2>Hello&nbsp;<span>Username</span>!</h2></div>
+  <div class="centered sixteen wide mobile only eight wide tablet only six wide computer only column">
+    <div class="ui container">
+      <form class="ui form">
+        <!-- -->
+        <div class="field">
+          <label>Academic Year</label>
+          <div class="ui fluid search selection dropdown">
+            <i class="dropdown icon"></i>
+            <div class="default text">Select academic year</div>
+            <div class="menu">
+                <div class="item" data-value="y1">2014-2015</div>
+                <div class="item" data-value="y1">2015-2016</div>
+                <div class="item" data-value="y3">2016-2017</div>
+                <div class="item" data-value="y4">2017-2018</div>
+            </div>
+          </div>
+        </div>
+        <!-- -->
+        <!-- -->
+        <div class="field">
+          <label>Year Of Study</label>
+          <div class="ui fluid search selection dropdown">
+            <i class="dropdown icon"></i>
+            <div class="default text">Select the year of study</div>
+            <div class="menu">
+                <div class="item" data-value="1st">1st Year</div>
+                <div class="item" data-value="2nd">2nd Year</div>
+                <div class="item" data-value="3rd">3rd Year</div>
+                <div class="item" data-value="4th">4th Year</div>
+            </div>
+          </div>
+        </div>
+        <!-- -->
+        <!-- -->
+        <div class="field">
+          <label>Department</label>
+          <div class="ui fluid search selection dropdown">
+            <i class="dropdown icon"></i>
+            <div class="default text">Select department</div>
+            <div class="menu">
+                <div class="item" data-value="cse">CSE</div>
+                <div class="item" data-value="it">IT</div>
+                <div class="item" data-value="cvl">CIVIL</div>
+                <div class="item" data-value="ece">ECE</div>
+                <div class="item" data-value="eee">EEE</div>
+            </div>
+          </div>
+        </div>
+        <!-- -->
+        <!-- -->
+        <div class="field">
+          <label>Section</label>
+          <div class="ui fluid search selection dropdown">
+            <i class="dropdown icon"></i>
+            <div class="default text">Select section</div>
+            <div class="menu">
+                <div class="item" data-value="a">A</div>
+                <div class="item" data-value="b">B</div>
+                <div class="item" data-value="c">C</div>
+
+            </div>
+          </div>
+        </div>
+        <!-- -->
+        <!-- -->
+        <div class="field">
+          <label>Assesment</label>
+          <div class="ui fluid search selection dropdown">
+            <i class="dropdown icon"></i>
+            <div class="default text">Select type of assesment</div>
+            <div class="menu">
+                <div class="item" data-value="ut1">UT1</div>
+                <div class="item" data-value="ct1">CT1</div>
+                <div class="item" data-value="ut2">UT2</div>
+                <div class="item" data-value="ct2">CT2</div>
+                <div class="item" data-value="modal">Modal</div>
+                <div class="item" data-value="other">Other Assesment</div>
+            </div>
+          </div>
+        </div>
+        <!-- -->
+
+      <div class="fluid ui buttons">
+        <button class="ui blue button">View</button>
+
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+<script src="js/jquery-3.1.1.min.js"></script>
+<!--jquery should be loaded before sematic and your custom javascript -->
+<script src="js/semantic.js"></script>
+
+<script>
+$(document).ready(function() {
+    $('.ui.selection.dropdown').dropdown();
+});
+var height = $("body").innerHeight();
+var hgt = height*0.10;
+//document.write(hgt);
+$('.margin').height(hgt);
+</script>
+
+</body>
+</html>

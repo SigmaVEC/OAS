@@ -1,0 +1,75 @@
+<!DOCTYPE Html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Course</title>
+
+  <link rel="stylesheet" href="css/semantic.min.css"></link>
+  <link rel="stylesheet" href="css/semantic.css"></link>
+<style>
+
+</style>
+</head>
+<body>
+<div class="ui container">
+  <div class="ui stackable grey inverted top fixed massive labeld icon menu">
+    <div class="item">Project Name</div>
+  </div>
+
+<!-- nav bar-->
+<div class="margin"></div>
+<div class="ui padded grid">
+  <div class="ui center aligned container"><h1>Login</h1></div>
+  <div class="centered sixteen wide mobile only eight wide tablet only six wide computer only column">
+    <div class="ui container">
+      <form class="ui form">
+        <div class="field">
+          <label>User Id</label>
+            <input name="id" placeholder="Id" type="text">
+        </div>
+        <div class="field">
+          <label>User Type</label>
+          <div class="ui fluid search selection dropdown">
+            <i class="dropdown icon"></i>
+            <div class="default text">Select Type Of User</div>
+            <div class="menu">
+                <div class="item" data-value="ad">Admin</div>
+                <div class="item" data-value="hd">Hod</div>
+                <div class="item" data-value="fc">Faculty</div>
+            </div>
+          </div>
+
+      </div>
+      <div class="field">
+        <label>Password</label>
+          <input name="pass" placeholder="password" type="password">
+      </div>
+
+      <div class="fluid ui buttons">
+        <button class="ui blue button">Sign In</button>
+        <div class="or"></div>
+        <button class="ui grey button">Cancel</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+<script src="js/jquery-3.1.1.min.js"></script>
+<!--jquery should be loaded before sematic and your custom javascript -->
+<script src="js/semantic.js"></script>
+
+<script>
+$(document).ready(function() {
+    $('.ui.selection.dropdown').dropdown();
+});
+var height = $("body").innerHeight();
+var hgt = height*0.30;
+//document.write(hgt);
+$('.margin').height(hgt);
+</script>
+
+</body>
+</html>
