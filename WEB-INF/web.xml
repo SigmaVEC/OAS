@@ -52,4 +52,13 @@
 		<servlet-name>timetable</servlet-name>
 		<url-pattern>/timetable</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>coDetails</servlet-name>
+		<servlet-class>coDetailsServlet</servlet-class>
+	</servlet>
+    <servlet-mapping>
+		<servlet-name>coDetails</servlet-name>
+		<url-pattern>/coDetails</url-pattern>
+	</servlet-mapping>
 </web-app>
