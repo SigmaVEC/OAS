@@ -61,4 +61,13 @@
 		<servlet-name>coDetails</servlet-name>
 		<url-pattern>/coDetails</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>setQuestions</servlet-name>
+		<servlet-class>setQuestionsServlet</servlet-class>
+	</servlet>
+    <servlet-mapping>
+		<servlet-name>setQuestions</servlet-name>
+		<url-pattern>/setQuestions</url-pattern>
+	</servlet-mapping>
 </web-app>
