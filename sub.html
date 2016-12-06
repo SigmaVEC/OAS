@@ -1,0 +1,101 @@
+<!DOCTYPE Html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Course</title>
+
+
+  <link rel="stylesheet" href="css/semantic.min.css"></link>
+  <link rel="stylesheet" href="css/semantic.css"></link>
+<style>
+
+</style>
+</head>
+<body>
+<div class="ui container">
+    <div class="ui stackable grey inverted top fixed huge labeld icon menu">
+      <div class="item">Subjects</div>
+      <div class="right icon menu">
+        <a class="item">
+          <i class="large red inverted sign out icon"></i>SignOut
+        </a>
+      </div>
+    </div>
+    <!-- nav bar-->
+<div class="margin"></div>
+
+
+<h3>Enter the number of subjects</h3>
+<div class="ui action input">
+  <input type="number" placeholder="count" name="num" id="count">
+  <button class="ui green button" onClick="call()">Go!</button>
+</div>
+
+
+<!-- -->
+<h2>Subjects no:<span id="subNo">0</span></h2>
+<table class="ui collapsing table" >
+  <thead>
+    <tr>
+      <th>Subject Name</th>
+      <th>Subject id</th>
+    </tr>
+  </thead>
+    <tbody id="tableBody">
+      <!--tr>
+        <td>
+          <div class="ui input"><input type="text" placeholder="Subject name.." name="subject" >
+          </div>
+        </td>
+        <td>
+          <div class="ui input"><input type="text" placeholder="Faculty name.." name="faculty" >
+          </div>
+        </td>
+      </tr-->
+    </tbody>
+</table>
+<!-- -->
+
+</div>
+
+
+<script src="js/jquery-3.1.1.min.js"></script>
+<!--jquery should be loaded before sematic and your custom javascript -->
+<script src="js/semantic.js"></script>
+<script>
+
+	$(document).ready(function() {
+		$('.ui.selection.dropdown').dropdown();
+	});
+	var height = $("body").innerHeight();
+	var hgt = height*0.15;
+
+	$('.margin').height(hgt);
+
+	$('.tabular.menu .item').tab();
+
+
+	function call(){
+		count = document.getElementById('count').value;
+		console.log(count); //debugging
+		$("#subNo").html(count); //display no of subject
+		s = "";
+		for (i =0 ; i < count; i++){
+			s = s + `<tr><td>
+					<div class="ui input"><input type="text" placeholder="Subject name `+(i+1)+`" id="subject` + i + `" ></div>
+				</td>
+				<td>
+					<div class="ui input"><input type="text" placeholder="Faculty id `+(i+1)+`" id="faculty` + i + `" ></div>
+				</td></tr>`
+		}
+
+		$("#tableBody").html(s);
+	}
+
+
+</script>
+
+</body>
+</html>
