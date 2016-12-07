@@ -25,17 +25,19 @@ public class setQuestionsServlet extends HttpServlet{
             String section = (String) jo1.get("section");
             String department = (String) jo1.get("department");
             String year = (String) jo1.get("year");
-            //?data={"subjectCode":"cs6545","section":"A","department":"CSE","year":"III","questions":[{"qno":"1","co":"co2","mark":16}]}
-            PreparedStatement stmt = con.prepareStatement("INSERT into questions(subjectCode, section, department, year, questions) values(?, ?, ?, ?, ?)");
+            String assesment = (String) jo1.get("assesment");
+            //?data={"subjectCode":"cs6545","assesment":"CT1","section":"A","department":"CSE","year":"III","questions":[{"qno":"1","co":"co2","mark":16}]}
+            PreparedStatement stmt = con.prepareStatement("INSERT into questions(subjectCode, assesment, section, department, year, questions) values(?, ?, ?, ?, ?)");
             stmt.setString(1, subjectCode);
-            stmt.setString(2, section);
-            stmt.setString(3, department);
-            stmt.setString(4, year);
+            stmt.setString(2, assesment);
+            stmt.setString(3, section);
+            stmt.setString(4, department);
+            stmt.setString(5, year);
 
             JSONObject q = new JSONObject();
             q.put("questions", list);
 
-            stmt.setString(5, q.toString());
+            stmt.setString(6, q.toString());
 
             stmt.executeUpdate();
 
