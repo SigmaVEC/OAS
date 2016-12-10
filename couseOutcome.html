@@ -1,0 +1,76 @@
+<!DOCTYPE Html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Course</title>
+        <link rel="stylesheet" href="css/semantic.min.css"></link>
+        <style>
+
+        </style>
+    </head>
+    <body>
+        <div class="ui container">
+            <div class="ui stackable grey inverted top fixed huge labeld icon menu">
+                <div class="item">Admin Dashboard</div>
+                <div class="right icon menu">
+                    <a class="item">
+                        <i class="large red inverted sign out icon"></i>SignOut
+                    </a>
+                </div>
+            </div>
+            <!-- nav bar ends-->
+            <div><br><br><br>
+                <button onclick="addNewCo()">add new</button>
+            </div>
+            <table id="tableCo">
+
+            </table>
+            <button onclick="submit()">submit</button>
+        </div>
+        <script src="js/jquery-3.1.1.min.js"></script>
+        <!--jquery should be loaded before sematic and your custom javascript -->
+        <script src="js/semantic.min.js"></script>
+
+        <script>
+            $(".form").submit(function(e){
+                e.preventDefault();
+            });
+            coCount = 0;
+            function addNewCo(){
+                s = `<tr>
+                    <td><input placeholder="coNo" id="cono`+coCount+`" value="co`+(coCount+1)+`"></td>
+                    <td><textarea placeholder="description" id="coDesc`+coCount+`"></textarea></td>
+                    <td><input type="number" placeholder="threshold" id="coThreshold`+coCount+`"></td>
+                    <td><input type="number" placeholder="target" id="coTarget`+coCount+`"></td>
+                </tr>`
+                coCount++;
+                $("#tableCo").append(s);
+            }
+            function submit(){
+                //alert("s");
+                arr = [];
+                console.log("clicked");
+                for (i = 0; i< coCount; i++){
+                    obj = {};
+                    obj.cono = $("#cono"+i).val();
+                    obj.description = $("#coDesc"+i).val();
+                    obj.threshold = Number($("#coThreshold"+i).val());
+                    obj.target = Number($("#coTarget"+i).val());
+                    arr.push(obj);
+                }
+                subjectCode = "dummy" //TODO:change it
+                data = {};
+                data.subjectCode = subjectCode;
+                data.coDetails = arr;
+                var jsonData = JSON.stringify(data);
+                console.log(jsonData);
+                $.get("/OAS/coDetails",{data:jsonData},function(result){
+                    console.log("result :"+result);
+                });
+            }
+            //TODO: Testing
+        </script>
+    </body>
+</html>
