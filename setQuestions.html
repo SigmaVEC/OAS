@@ -13,30 +13,50 @@
     <body>
         <div class="ui container">
             <div class="ui stackable grey inverted top fixed huge labeld icon menu">
-                <div class="item">Admin Dashboard</div>
+                <div class="item">Questions</div>
                 <div class="right icon menu">
                     <a class="item">
                         <i class="large red inverted sign out icon"></i>SignOut
                     </a>
                 </div>
             </div>
+            <div class="margin"></div>
+            <h3>Set Questions</h3>
+
             <!-- nav bar ends-->
-            <div><br><br><br>
-                <button onclick="addNewQues()">add new</button>
-            </div>
-            <table id="tableQues">
+            <button class="ui blue button" id="head" onclick="addNewQues()">Add New Question</button>
+
+            <table class="ui collapsing table" id="tableQues">
 
             </table>
-            <button onclick="submit()">submit</button>
+            <button class="ui green button" onclick="submit()">submit</button>
         </div>
         <script src="js/jquery-3.1.1.min.js"></script>
         <!--jquery should be loaded before sematic and your custom javascript -->
         <script src="js/semantic.min.js"></script>
+        <script>
+            var height = $("body").innerHeight();
+            var hgt = height*0.15;
+
+            $('.margin').height(hgt);
+        </script>
 
         <script>
             $(".form").submit(function(e){
                 e.preventDefault();
             });
+            h=`<thead>
+            <tr>
+                <th>Question No</th>
+                <th>Course Outcome No</th>
+                <th>Marks</th>
+
+             </tr>
+            </thead>`
+
+                $( "#head" ).one( "click", function() {
+                    $("#tableQues").append(h);
+                });
             qCount = 0;
             cooptionsarr = ['co1','co2']
             function getCoOptions(){
@@ -48,13 +68,13 @@
             }
             function addNewQues(){
                 s = `<tr>
-                    <td><input placeholder="qNo" id="qno`+qCount+`" value="q`+(qCount+1)+`"></td>
+                    <td><div class="ui input"><input placeholder="qNo" id="qno`+qCount+`" value="q`+(qCount+1)+`"></div></td>
                     <td>
                         <select id="qCo`+qCount+`" class="coListing">
                             `+getCoOptions()+`
                         </select>
                     </td>
-                    <td><input type="number" placeholder="Maximum Marks" id="qMark`+qCount+`"></td>
+                    <td><div class="ui input"><input type="text" placeholder="Maximum Marks" id="qMark`+qCount+`"></div></td>
                 </tr>`
                 qCount++;
                 $("#tableQues").append(s);
