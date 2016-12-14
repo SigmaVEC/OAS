@@ -1,0 +1,118 @@
+<!DOCTYPE Html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Course</title>
+        <link rel="stylesheet" href="css/semantic.min.css"></link>
+         <link rel="stylesheet" media="screen" href="dist/handsontable.full.css">
+        <style>
+
+        </style>
+    </head>
+    <body>
+        <div class="ui container">
+            <div class="ui stackable grey inverted top fixed huge labeld icon menu">
+                <div class="item">Admin Dashboard</div>
+                <div class="right icon menu">
+                    <a class="item">
+                        <i class="large red inverted sign out icon"></i>SignOut
+                    </a>
+                </div>
+            </div>
+            <!-- nav bar ends-->
+            <div><br><br><br>
+                <div id="excel"></div>
+            </div>
+            <div>
+                <table class="table" id="dispResult"></table>
+            </div>
+            <div>
+                <button onclick="calculate()">Calculate</button>
+            </div>
+        </div>
+        <script src="js/jquery-3.1.1.min.js"></script>
+        <!--jquery should be loaded before sematic and your custom javascript -->
+        <script src="js/semantic.min.js"></script>
+        <script src="dist/handsontable.full.js"></script>
+
+        <script>
+            $(".form").submit(function(e){
+                e.preventDefault();
+            });
+            var columnHeaders = []
+
+
+            var container = document.getElementById('excel');
+            var hot;
+
+            var questions;
+            var students;
+            $.get("getData",{data:"enterMarks"},function(result){
+                if(typeof result.error == "undefined"){
+                    questions = result.questions;
+                    students = result.students;
+                    for (i in questions){
+                        columnHeaders.push(questions[i].qno);
+                    }
+                    loadExcel();
+                }else{
+                    alert(result.error);
+                }
+            });
+            questions = [{"qno":"1","co":"co2","mark":16},{"qno":"2","co":"co1","mark":16},{"qno":"3","co":"co2","mark":16},{"qno":"4","co":"co2","mark":10},{"qno":"5","co":"co2","mark":12}]
+            columnHeaders = ["q1","q2","q3","q4","q5"]
+            students = ["sk","sk2","sk3"]
+            loadExcel();
+            function loadExcel(){
+                hot = new Handsontable(container, {
+                  //data: data,
+                  minSpareRows:students.length ,
+                  rowHeaders: true,
+        		  autoWrapRow: true,
+        		  stretchH: "all",
+                  colHeaders: columnHeaders,
+                  rowHeaders: students
+                });
+            }
+            var test;
+            function calculate(){
+                data = hot.getData();
+                arr = [];
+                for ( i in data ){ //each row
+                    obj = {};
+                    if (typeof students[i] == "undefined")
+                        continue;
+                    obj.sid = students[i];
+                    co = {};
+                    for (j in data[i]){ //each cell
+                        if( typeof co[questions[j].co] == "undefined"){
+                            co[questions[j].co] = 0;
+                        }
+                        co[questions[j].co] = co[questions[j].co] + Number(data[i][j]);
+                    }
+                    obj.co = co;
+                    arr.push(obj);
+                }
+                test = arr;
+                console.log(arr);
+                //alert(arr); //TODO: display arr
+                displayTable(arr);
+            }
+            function displayTable(data){
+                s = "";
+                for ( i in data){
+                    s = s + '<tr><th>'+data[i].sid+'</th>';
+                    console.log(data[i].co);
+                    cos = data[i].co;
+                    for (j in cos){
+                        s = s + '<td>'+ cos[j] +'</td>'
+                    }
+                    s = s + "</tr>"
+                }
+                $("#dispResult").html(s);
+            }
+        </script>
+    </body>
+</html>

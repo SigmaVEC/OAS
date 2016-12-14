@@ -70,4 +70,13 @@
 		<servlet-name>setQuestions</servlet-name>
 		<url-pattern>/setQuestions</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>addStudents</servlet-name>
+		<servlet-class>addStudentsServlet</servlet-class>
+	</servlet>
+    <servlet-mapping>
+		<servlet-name>addStudents</servlet-name>
+		<url-pattern>/addStudents</url-pattern>
+	</servlet-mapping>
 </web-app>
