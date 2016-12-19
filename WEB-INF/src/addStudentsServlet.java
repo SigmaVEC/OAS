@@ -22,10 +22,15 @@ public class addStudentsServlet extends HttpServlet{
             JSONObject jo1 = (JSONObject) obj;
 
             JSONArray list = (JSONArray) jo1.get("data");
-            String section = (String) jo1.get("section");
-            String department = (String) jo1.get("department");
-            String year = (String) jo1.get("year");
+            //String section = (String) jo1.get("section");
+            //String department = (String) jo1.get("department");
+            //String year = (String) jo1.get("year");
+
+            //changes to input only data needed
             //?data={"section":"A","department":"CSE","year":"III","data":[{"sid":"1","name":"name1"},{"sid":"2","name":"name2"}]}
+            String department = (String)session.getAttribute("department");
+            String section = (String)session.getAttribute("section");
+            String year = (String)session.getAttribute("year");
             PreparedStatement stmt = con.prepareStatement("INSERT into students(sid, name, section, department, year) values(?, ?, ?, ?, ?)");
 
             stmt.setString(3, section);

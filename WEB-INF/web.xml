@@ -79,4 +79,22 @@
 		<servlet-name>addStudents</servlet-name>
 		<url-pattern>/addStudents</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>setSelections</servlet-name>
+		<servlet-class>setSelectionsServlet</servlet-class>
+	</servlet>
+    <servlet-mapping>
+		<servlet-name>setSelections</servlet-name>
+		<url-pattern>/setSelections</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>getSelections</servlet-name>
+		<servlet-class>getSelectionsServlet</servlet-class>
+	</servlet>
+    <servlet-mapping>
+		<servlet-name>getSelections</servlet-name>
+		<url-pattern>/getSelections</url-pattern>
+	</servlet-mapping>
 </web-app>

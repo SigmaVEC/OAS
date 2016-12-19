@@ -28,11 +28,11 @@
   <div class="ui container"><h2>Hello&nbsp;<span>Username</span>!</h2></div>
   <div class="centered sixteen wide mobile only eight wide tablet only six wide computer only column">
     <div class="ui container">
-      <form class="ui form">
+      <div class="ui form">
         <!-- -->
         <div class="field">
           <label>Academic Year</label>
-          <div class="ui fluid search selection dropdown">
+          <div class="ui fluid search selection dropdown" id="ayearDropdown">
             <i class="dropdown icon"></i>
             <div class="default text">Select academic year</div>
             <div class="menu">
@@ -47,7 +47,7 @@
         <!-- -->
         <div class="field">
           <label>Year Of Study</label>
-          <div class="ui fluid search selection dropdown">
+          <div class="ui fluid search selection dropdown" id="yearDropdown">
             <i class="dropdown icon"></i>
             <div class="default text">Select the year of study</div>
             <div class="menu">
@@ -62,7 +62,7 @@
         <!-- -->
         <div class="field">
           <label>Department</label>
-          <div class="ui fluid search selection dropdown">
+          <div class="ui fluid search selection dropdown" id="departmentDropdown">
             <i class="dropdown icon"></i>
             <div class="default text">Select department</div>
             <div class="menu">
@@ -78,7 +78,7 @@
         <!-- -->
         <div class="field">
           <label>Section</label>
-          <div class="ui fluid search selection dropdown">
+          <div class="ui fluid search selection dropdown" id="sectionDropdown">
             <i class="dropdown icon"></i>
             <div class="default text">Select section</div>
             <div class="menu">
@@ -93,7 +93,7 @@
         <!-- -->
         <div class="field">
           <label>Assesment</label>
-          <div class="ui fluid search selection dropdown">
+          <div class="ui fluid search selection dropdown" id="assesmentDropdown">
             <i class="dropdown icon"></i>
             <div class="default text">Select type of assesment</div>
             <div class="menu">
@@ -109,10 +109,10 @@
         <!-- -->
 
       <div class="fluid ui buttons">
-        <button class="ui blue button">View</button>
+        <button class="ui blue button" onclick="submit()">View</button>
 
       </div>
-      </form>
+    </div>
     </div>
   </div>
 </div>
@@ -122,13 +122,29 @@
 <script src="js/semantic.min.js"></script>
 
 <script>
-$(document).ready(function() {
-    $('.ui.selection.dropdown').dropdown();
-});
-var height = $("body").innerHeight();
-var hgt = height*0.10;
-//document.write(hgt);
-$('.margin').height(hgt);
+    $(document).ready(function() {
+        $('.ui.selection.dropdown').dropdown();
+    });
+    var height = $("body").innerHeight();
+    var hgt = height*0.10;
+    //document.write(hgt);
+    $('.margin').height(hgt);
+    function submit(){
+        var obj={};
+        obj.ayear = $("#ayearDropdown").dropdown('get value');
+        obj.year = $("#yearDropdown").dropdown('get value');
+        obj.department = $("#departmentDropdown").dropdown('get value');
+        obj.section = $("#sectionDropdown").dropdown('get value');
+        obj.assesment = $("#assesmentDropdown").dropdown('get value');
+        console.log(obj);
+        $.get("setSelections",obj,function(result){
+            if(result.message == "done"){
+                window.location = "dashboard.html";
+            }else{
+                alert(result.message);
+            }
+        });
+    }
 </script>
 
 </body>

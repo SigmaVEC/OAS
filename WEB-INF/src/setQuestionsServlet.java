@@ -22,10 +22,14 @@ public class setQuestionsServlet extends HttpServlet{
 
             JSONArray list = (JSONArray) jo1.get("questions");
             String subjectCode = (String) jo1.get("subjectCode");
-            String section = (String) jo1.get("section");
+            /*String section = (String) jo1.get("section");
             String department = (String) jo1.get("department");
             String year = (String) jo1.get("year");
-            String assesment = (String) jo1.get("assesment");
+            String assesment = (String) jo1.get("assesment");*/
+            String year = (String)session.getAttribute("year");
+            String department = (String)session.getAttribute("department");
+            String section = (String)session.getAttribute("section");
+            String assesment = (String)session.getAttribute("assesment");
             //?data={"subjectCode":"cs6545","assesment":"CT1","section":"A","department":"CSE","year":"III","questions":[{"qno":"1","co":"co2","mark":16}]}
             PreparedStatement stmt = con.prepareStatement("INSERT into questions(subjectCode, assesment, section, department, year, questions) values(?, ?, ?, ?, ?)");
             stmt.setString(1, subjectCode);
