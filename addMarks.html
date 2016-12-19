@@ -21,29 +21,50 @@
                 </div>
             </div>
             <!-- nav bar ends-->
-            <div><br><br><br>
-                <button onclick="addNewCo()">add new</button>
-            </div>
-            <table id="tableCo">
+            <div class="margin"></div>
+            <h3>Click the Button to add Marks</h3>
+                <button class="ui blue button" id="head" onclick="addNewCo()">Add Marks</button>
+
+
+            <table id="tableCo" class="ui collapsing table">
 
             </table>
-            <button onclick="submit()">submit</button>
+            <button class="ui green button" onclick="submit()">Submit</button>
+
         </div>
         <script src="js/jquery-3.1.1.min.js"></script>
         <!--jquery should be loaded before sematic and your custom javascript -->
         <script src="js/semantic.min.js"></script>
+        <script>
+            var height = $("body").innerHeight();
+            var hgt = height*0.15;
+
+            $('.margin').height(hgt);
+        </script>
 
         <script>
             $(".form").submit(function(e){
                 e.preventDefault();
             });
             coCount = 0;
+                h=`<thead>
+                <tr>
+                    <th>Course Outcome</th>
+                    <th>Description</th>
+                    <th>Threshold</th>
+                    <th>Target</th>
+                 </tr>
+                </thead>`
+
+            $( "#head" ).one( "click", function() {
+                $("#tableCo").append(h);
+            });
             function addNewCo(){
                 s = `<tr>
-                    <td><input placeholder="coNo" id="cono`+coCount+`" value="co`+(coCount+1)+`"></td>
-                    <td><textarea placeholder="description" id="coDesc`+coCount+`"></textarea></td>
-                    <td><input type="number" placeholder="threshold" id="coThreshold`+coCount+`"></td>
-                    <td><input type="number" placeholder="target" id="coTarget`+coCount+`"></td>
+                    <td><div class="ui input"><input placeholder="coNo" id="cono`+coCount+`" value="co`+(coCount+1)+`"></div></td>
+                    <td><div class="ui input"><input placeholder="description" id="coDesc`+coCount+`"></div></td>
+                    <td><div class="ui input"><input type="text" placeholder="threshold" id="coThreshold`+coCount+`"></div></td>
+                    <td><div class="ui input"><input type="text" placeholder="target" id="coTarget`+coCount+`"></div></td>
                 </tr>`
                 coCount++;
                 $("#tableCo").append(s);
