@@ -22,20 +22,29 @@
                 </div>
             </div>
             <!-- nav bar ends-->
-            <div><br><br><br>
+            <div class="margin"></div>
+            <div>
                 <div id="excel"></div>
             </div>
             <div>
                 <table class="table" id="dispResult"></table>
             </div>
             <div>
-                <button onclick="calculate()">Calculate</button>
+                <br>
+                <button class="ui blue button" onclick="calculate()">Calculate</button>
+
             </div>
         </div>
         <script src="js/jquery-3.1.1.min.js"></script>
         <!--jquery should be loaded before sematic and your custom javascript -->
         <script src="js/semantic.min.js"></script>
         <script src="dist/handsontable.full.js"></script>
+        <script>
+            var height = $("body").innerHeight();
+            var hgt = height*0.15;
+
+            $('.margin').height(hgt);
+        </script>
 
         <script>
             $(".form").submit(function(e){
