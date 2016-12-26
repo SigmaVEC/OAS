@@ -54,9 +54,14 @@ public class timetableServlet extends HttpServlet{
             JSONObject jo1 = (JSONObject) obj;
 
             JSONArray list = (JSONArray) jo1.get("facultyAssignment");
+            /*
             String section = (String) jo1.get("section");
             String department = (String) jo1.get("department");
             String year = (String) jo1.get("year");
+            */
+            String year = (String)session.getAttribute("year");
+            String department = (String)session.getAttribute("department");
+            String section = (String)session.getAttribute("section");
             //data={"section":"A","department":"CSE","year":"II","facultyAssignment":[{"courseCode":"cs6501","facultyId":"fc123"}]}
             PreparedStatement stmt = con.prepareStatement("INSERT into timetable(section, department, year, subjectcode, facultyid) values(?, ?, ?, ?, ?)");
             stmt.setString(1,section);
