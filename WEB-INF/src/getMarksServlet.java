@@ -3,17 +3,17 @@ import javax.servlet.*;
 import java.io.*;
 import java.sql.*;
 import org.json.simple.*;
-public class saveMarksServlet extends HttpServlet{
+import org.json.simple.parser.*;
+public class getMarksServlet extends HttpServlet{
     public void doGet(HttpServletRequest req,HttpServletResponse res) throws ServletException,IOException {
         res.setContentType("application/json");//setting the content type
         PrintWriter out=res.getWriter();//get the stream to write the data
 
+        JSONParser parser = new JSONParser();
+        JSONObject jo = new JSONObject();
 
-        String excelData = req.getParameter("excelData");
-        String coData = req.getParameter("coData");
         String subjectCode = req.getParameter("subjectCode");
 
-        JSONObject jo = new JSONObject();
         HttpSession session = req.getSession(true);
         String ayear = (String)session.getAttribute("ayear");
         String year = (String)session.getAttribute("year");
@@ -29,7 +29,6 @@ public class saveMarksServlet extends HttpServlet{
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/course","test","test");
                 //here sonoo is database name, root is username and password
-
                 PreparedStatement stmt = con.prepareStatement("select excelData, coData from marks where subjectCode = ? and assesment = ? and section = ? and department = ? and year = ?");
 
                 stmt.setString(1,subjectCode);
@@ -41,22 +40,17 @@ public class saveMarksServlet extends HttpServlet{
                 ResultSet rs=stmt.executeQuery();
 
                 if(!rs.next()){
-                    stmt = con.prepareStatement("INSERT INTO marks(excelData, coData, subjectCode, assesment, section, department, year) VALUES(?, ?, ?, ?, ?, ?, ?)");
+                    msg = "No marks Found";
                 }else{
-                    stmt = con.prepareStatement("UPDATE marks set excelData = ? , coData = ? where subjectCode = ? and assesment = ? and section = ? and department = ? and year = ?");
+                    String excel = rs.getString(1);
+                    String co = rs.getString(2);
+                    Object obj1 = parser.parse(excel);
+                    Object obj2 = parser.parse(co);
+                    JSONObject jo1 = (JSONObject) obj1;
+                    JSONObject jo2 = (JSONObject) obj2;
+                    jo.put("excel", jo1);
+                    jo.put("co", jo2);
                 }
-
-                stmt.setString(1,excelData);
-                stmt.setString(2,coData);
-                stmt.setString(3,subjectCode);
-                stmt.setString(4,assesment);
-                stmt.setString(5,section);
-                stmt.setString(6,department);
-                stmt.setString(7,year);
-
-
-                int c = stmt.executeUpdate();
-                jo.put("row changed", c);
 
                 stmt.close();
                 con.close();

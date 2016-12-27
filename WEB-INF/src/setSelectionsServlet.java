@@ -14,11 +14,16 @@ public class setSelectionsServlet extends HttpServlet{
         String assesment = req.getParameter("assesment");
         JSONObject jo = new JSONObject();
         try{
-            session.setAttribute("ayear",ayear);
-            session.setAttribute("year",year);
-            session.setAttribute("department",department);
-            session.setAttribute("section", section);
-            session.setAttribute("assesment", assesment);
+            if (ayear != null)
+                session.setAttribute("ayear",ayear);
+            if (year != null)
+                session.setAttribute("year",year);
+            if (department != null)
+                session.setAttribute("department",department);
+            if (section != null)
+                session.setAttribute("section", section);
+            if (assesment != null)
+                session.setAttribute("assesment", assesment);
             jo.put("message","done");
         }catch(Exception e){
             String s = e.toString();

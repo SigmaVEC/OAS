@@ -117,7 +117,6 @@
         obj.year = $("#yearDropdown").dropdown('get value');
         obj.department = $("#departmentDropdown").dropdown('get value');
         obj.section = $("#sectionDropdown").dropdown('get value');
-        obj.assesment = $("#assesmentDropdown").dropdown('get value');
         console.log(obj);
         $.get("setSelections",obj,function(result){
             if(result.message == "done"){

@@ -1,5 +1,12 @@
 <!DOCTYPE Html>
 <html>
+    <%
+        String assesment = (String)session.getAttribute("assesment");
+        if (assesment == null){
+            response.setStatus(response.SC_MOVED_TEMPORARILY);
+            response.setHeader("Location", "selectSubjectCode.html"); 
+        }
+    %>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -37,7 +44,8 @@
                 <div id="excel"></div>
             </div>
             <div>
-                <table class="table" id="dispResult"></table>
+                <br>
+                <table class="ui celled table" id="dispResult"></table>
             </div>
             <div>
                 <br>
@@ -68,7 +76,8 @@
 
             var questions;
             var students;
-
+            var dataExcel = [];
+            var dataCO;
             questions = [{"qno":"1","co":"co2","mark":16},{"qno":"2","co":"co1","mark":16},{"qno":"3","co":"co2","mark":16},{"qno":"4","co":"co2","mark":10},{"qno":"5","co":"co2","mark":12}]
             columnHeaders = [];
             students = [];
@@ -83,7 +92,12 @@
                         columnHeaders.push(questions[i].qno+" ("+questions[i].mark+")");
                     }
                     //console.log(columnHeaders);
-                    loadExcel();
+                    $.get("getMarks",{subjectCode:$("#subjectCode").val()}, function(result){
+                        dataExcel = result.excel.data;
+                        dataCO = result.co;
+                        loadExcel();
+                    });
+
                 });
             }
 
@@ -94,8 +108,9 @@
                     obj.type = "numeric";
                     cols.push(obj);
                 }
+
                 hot = new Handsontable(container, {
-                  //data: data,
+                  data: dataExcel,
                   minSpareRows:students.length ,
                   maxRows:students.length,
                   rowHeaders: true,
@@ -112,8 +127,13 @@
                 obj = {};
                 obj.data = data;
                 jsonData = JSON.stringify(obj);
-                $.get("saveMarks",{data:jsonData, subjectCode:$("#subjectCode").val(), mode="excel"}, function(result){
+                console.log(jsonData);
+                var objCo = {};
+                objCo.co = calculate();
+                jsonData1 = JSON.stringify(objCo);
+                $.get("saveMarks",{excelData:jsonData,coData:jsonData1, subjectCode:$("#subjectCode").val()}, function(result){
                     alert(result.message);
+                    console.log(result.error);
                 });
             }
             function calculate(){
@@ -138,19 +158,27 @@
                 console.log(arr);
                 //alert(arr); //TODO: display arr
                 displayTable(arr);
+                return arr;
             }
             function displayTable(data){
                 s = "";
+                f = true;
+                h = "<thead><tr><td></td>";
                 for ( i in data){
                     s = s + '<tr><th>'+data[i].sid+'</th>';
-                    console.log(data[i].co);
+                    //console.log(data[i].co);
                     cos = data[i].co;
                     for (j in cos){
+                        console.log(j);
+                        if (f)
+                            h = h + "<td>"+ j + "</td>";
                         s = s + '<td>'+ cos[j] +'</td>'
                     }
+                    f = false;
                     s = s + "</tr>"
                 }
-                $("#dispResult").html(s);
+                h = h + "</tr></thead>";
+                $("#dispResult").html(h+s);
             }
         </script>
     </body>

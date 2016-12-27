@@ -106,4 +106,31 @@
 		<servlet-name>getQuesAndStud</servlet-name>
 		<url-pattern>/getQuesAndStud</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>saveMarks</servlet-name>
+		<servlet-class>saveMarksServlet</servlet-class>
+	</servlet>
+    <servlet-mapping>
+		<servlet-name>saveMarks</servlet-name>
+		<url-pattern>/saveMarks</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>getMarks</servlet-name>
+		<servlet-class>getMarksServlet</servlet-class>
+	</servlet>
+    <servlet-mapping>
+		<servlet-name>getMarks</servlet-name>
+		<url-pattern>/getMarks</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>signout</servlet-name>
+		<servlet-class>signoutServlet</servlet-class>
+	</servlet>
+    <servlet-mapping>
+		<servlet-name>signout</servlet-name>
+		<url-pattern>/signout</url-pattern>
+	</servlet-mapping>
 </web-app>

@@ -1,5 +1,12 @@
 <!DOCTYPE Html>
 <html>
+    <%
+        String assesment = (String)session.getAttribute("assesment");
+        if (assesment == null){
+            response.setStatus(response.SC_MOVED_TEMPORARILY);
+            response.setHeader("Location", "selectSubjectCode.html");
+        }
+    %>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
