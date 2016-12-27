@@ -133,4 +133,13 @@
 		<servlet-name>signout</servlet-name>
 		<url-pattern>/signout</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>getCoDetails</servlet-name>
+		<servlet-class>getCoDetailsServlet</servlet-class>
+	</servlet>
+    <servlet-mapping>
+		<servlet-name>getCoDetails</servlet-name>
+		<url-pattern>/getCoDetails</url-pattern>
+	</servlet-mapping>
 </web-app>

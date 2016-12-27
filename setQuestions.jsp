@@ -2,7 +2,11 @@
 <html>
     <%
         String assesment = (String)session.getAttribute("assesment");
-        if (assesment == null){
+        String role = (String)session.getAttribute("role");
+        if (role == null ){
+            response.setStatus(response.SC_MOVED_TEMPORARILY);
+            response.setHeader("Location", "index.html");
+        }else if (assesment == null){
             response.setStatus(response.SC_MOVED_TEMPORARILY);
             response.setHeader("Location", "selectSubjectCode.html");
         }

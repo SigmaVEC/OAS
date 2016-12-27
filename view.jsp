@@ -27,33 +27,22 @@
             <div class="ui stackable grey inverted top fixed huge labeld icon menu">
                 <div class="item">Marks</div>
                 <div class="right icon menu">
-                    <a class="item">
+                    <a class="item" href="signout">
                         <i class="large red inverted sign out icon"></i>SignOut
                     </a>
                 </div>
             </div>
             <!-- nav bar ends-->
             <div class="margin"></div>
-            <div class="ui form">
-                <div class="fields">
-                    <div class="field">
-                        <input placeholder="Subject Code" id="subjectCode"></input>
-                    </div>
-                    <div class="field">
-                        <button class="ui blue button" onclick="getData()">Set</button>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div id="excel"></div>
-            </div>
+
             <div>
                 <br>
                 <table class="ui celled table" id="dispResult"></table>
             </div>
             <div>
                 <br>
-                <button class="ui green button" onclick="save()">Save</button>
+                <input placeholder="Subject Code" id="subjectCode"></input>
+                <button class="ui green button" onclick="getData()">submit</button>
 
             </div>
         </div>
@@ -74,10 +63,6 @@
             });
             var columnHeaders = []
 
-
-            var container = document.getElementById('excel');
-            var hot;
-
             var questions;
             var students;
             var dataExcel = [];
@@ -85,6 +70,7 @@
             questions = [{"qno":"1","co":"co2","mark":16},{"qno":"2","co":"co1","mark":16},{"qno":"3","co":"co2","mark":16},{"qno":"4","co":"co2","mark":10},{"qno":"5","co":"co2","mark":12}]
             columnHeaders = [];
             students = [];
+            var CO = {};
             function getData(){
                 $.get("getQuesAndStud", {subjectCode:$("#subjectCode").val()}, function(result){
                     questions = result.questions.questions;
@@ -99,49 +85,25 @@
                     $.get("getMarks",{subjectCode:$("#subjectCode").val()}, function(result){
                         dataExcel = result.excel.data;
                         dataCO = result.co;
-                        loadExcel();
+                        //loadExcel();
+
+                        $.get("getCoDetails", {subjectCode:$("#subjectCode").val()} , function(result){
+                            console.log(result);
+                            for (i in result.co){
+                                CO[result.co[i].co] = result.co[i];
+                                console.log(result.co[i].co);
+                            }
+                            calculate();
+                        });
+
                     });
 
                 });
             }
 
-            function loadExcel(){
-                var cols = [];
-                for (i in columnHeaders){
-                    obj = {};
-                    obj.type = "numeric";
-                    cols.push(obj);
-                }
 
-                hot = new Handsontable(container, {
-                  data: dataExcel,
-                  minSpareRows:students.length ,
-                  maxRows:students.length,
-                  rowHeaders: true,
-        		  autoWrapRow: true,
-        		  stretchH: "all",
-                  columns:cols,
-                  colHeaders: columnHeaders,
-                  rowHeaders: students
-                });
-            }
-            var test;
-            function save(){
-                data = hot.getData();
-                obj = {};
-                obj.data = data;
-                jsonData = JSON.stringify(obj);
-                console.log(jsonData);
-                var objCo = {};
-                objCo.co = calculate();
-                jsonData1 = JSON.stringify(objCo);
-                $.get("saveMarks",{excelData:jsonData,coData:jsonData1, subjectCode:$("#subjectCode").val()}, function(result){
-                    alert(result.message);
-                    console.log(result.error);
-                });
-            }
             function calculate(){
-                data = hot.getData();
+                data = dataExcel;
                 arr = [];
                 for ( i in data ){ //each row
                     obj = {};
@@ -176,7 +138,10 @@
                         console.log(j);
                         if (f)
                             h = h + "<td>"+ j + "</td>";
-                        s = s + '<td>'+ cos[j] +'</td>'
+                        color = ""
+                        if (CO[j].threshold > cos[j])
+                            color = "error"
+                        s = s + '<td class="'+color+'">'+ cos[j] +'</td>'
                     }
                     f = false;
                     s = s + "</tr>"
