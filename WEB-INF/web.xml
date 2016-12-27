@@ -97,4 +97,13 @@
 		<servlet-name>getSelections</servlet-name>
 		<url-pattern>/getSelections</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>getQuesAndStud</servlet-name>
+		<servlet-class>getQuesAndStudServlet</servlet-class>
+	</servlet>
+    <servlet-mapping>
+		<servlet-name>getQuesAndStud</servlet-name>
+		<url-pattern>/getQuesAndStud</url-pattern>
+	</servlet-mapping>
 </web-app>

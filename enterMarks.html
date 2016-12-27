@@ -24,6 +24,10 @@
             <!-- nav bar ends-->
             <div class="margin"></div>
             <div>
+                <input placeholder="Subject Code" id="subjectCode"></input>
+                <button onclick="getData()">Set</button>
+            </div>
+            <div>
                 <div id="excel"></div>
             </div>
             <div>
@@ -31,7 +35,7 @@
             </div>
             <div>
                 <br>
-                <button class="ui blue button" onclick="calculate()">Calculate</button>
+                <button class="ui blue button" onclick="save()">Save</button>
 
             </div>
         </div>
@@ -58,34 +62,54 @@
 
             var questions;
             var students;
-            $.get("getData",{data:"enterMarks"},function(result){
-                if(typeof result.error == "undefined"){
-                    questions = result.questions;
-                    students = result.students;
-                    for (i in questions){
-                        columnHeaders.push(questions[i].qno);
-                    }
-                    loadExcel();
-                }else{
-                    alert(result.error);
-                }
-            });
+
             questions = [{"qno":"1","co":"co2","mark":16},{"qno":"2","co":"co1","mark":16},{"qno":"3","co":"co2","mark":16},{"qno":"4","co":"co2","mark":10},{"qno":"5","co":"co2","mark":12}]
-            columnHeaders = ["q1","q2","q3","q4","q5"]
-            students = ["sk","sk2","sk3"]
-            loadExcel();
+            columnHeaders = [];
+            students = [];
+            function getData(){
+                $.get("getQuesAndStud", {subjectCode:$("#subjectCode").val()}, function(result){
+                    questions = result.questions.questions;
+                    students = result.students;
+                    console.log(result);
+                    //console.log(questions);
+                    columnHeaders = [];
+                    for (i in questions){
+                        columnHeaders.push(questions[i].qno+" ("+questions[i].mark+")");
+                    }
+                    //console.log(columnHeaders);
+                    loadExcel();
+                });
+            }
+
             function loadExcel(){
+                var cols = [];
+                for (i in columnHeaders){
+                    obj = {};
+                    obj.type = "numeric";
+                    cols.push(obj);
+                }
                 hot = new Handsontable(container, {
                   //data: data,
                   minSpareRows:students.length ,
+                  maxRows:students.length,
                   rowHeaders: true,
         		  autoWrapRow: true,
         		  stretchH: "all",
+                  columns:cols,
                   colHeaders: columnHeaders,
                   rowHeaders: students
                 });
             }
             var test;
+            function save(){
+                data = hot.getData();
+                obj = {};
+                obj.data = data;
+                jsonData = JSON.stringify(obj);
+                $.get("saveMarks",{data:jsonData, subjectCode:$("#subjectCode").val(), mode="excel"}, function(result){
+                    alert(result.message);
+                });
+            }
             function calculate(){
                 data = hot.getData();
                 arr = [];

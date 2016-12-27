@@ -25,7 +25,7 @@
 
             <!-- nav bar ends-->
             <button class="ui blue button" id="head" onclick="addNewQues()">Add New Question</button>
-
+             <input id="subjectCode" placeholder="Enter subject code"></input>
             <table class="ui collapsing table" id="tableQues">
 
             </table>
@@ -90,22 +90,24 @@
                     obj.mark = Number($("#qMark"+i).val());
                     arr.push(obj);
                 }
-                subjectCode = "dummy";//TODO:change it
-                assesment = "dummyass";
+                subjectCode = $("#subjectCode").val();
+                /*assesment = "dummyass";
                 section = "dummysec";
                 department = "dummyDept"
                 year = "dummyYr";
+                */
                 data = {};
                 data.subjectCode = subjectCode;
-                data.assesment = assesment;
+                /*data.assesment = assesment;
                 data.section = section;
                 data.department = department;
-                data.year = year;
+                data.year = year;*/
                 data.questions = arr;
                 var jsonData = JSON.stringify(data);
                 console.log(jsonData);
                 $.get("/OAS/setQuestions",{data:jsonData},function(result){
-                    console.log("result :"+result);
+                    console.log("result  error:"+result.error);
+                    alert(result.message);
                 });
             }
             //TODO: Testing

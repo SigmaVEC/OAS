@@ -14,6 +14,7 @@ public class coDetailsServlet extends HttpServlet{
 
         JSONObject jo = new JSONObject();
         JSONParser parser = new JSONParser();
+        String msg = "done";
         try{
             Class.forName("com.mysql.jdbc.Driver");
             Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/course","test","test");
@@ -40,8 +41,10 @@ public class coDetailsServlet extends HttpServlet{
             }
 
         }catch(Exception e){
+            msg = "try again";
             jo.put("error",e.toString());
         }
+        jo.put("message",msg);
         //writing html in the stream
         out.println(jo);
 

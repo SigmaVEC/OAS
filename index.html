@@ -79,6 +79,8 @@ $('.margin').height(hgt);
             console.log(result);
             if(result.message == "Success"){
                 window.location = "/OAS/profile.html";
+            }else{
+                alert(result.message);
             }
         });
     });

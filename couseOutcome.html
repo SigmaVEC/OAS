@@ -25,6 +25,7 @@
             <h3>Click the Button to add New Course OutCome</h3>
 
               <button class="ui blue button" id ="head" onclick="addNewCo();">Add New</button>
+              <input id="subjectCode" placeholder="Enter subject code"></input>
             <table id="tableCo" class="ui collapsing table">
 
             </table>
@@ -78,7 +79,7 @@
                     obj.target = Number($("#coTarget"+i).val());
                     arr.push(obj);
                 }
-                subjectCode = "dummy" //TODO:change it
+                subjectCode = $("#subjectCode").val(); //TODO:change it
                 data = {};
                 data.subjectCode = subjectCode;
                 data.coDetails = arr;
@@ -86,6 +87,7 @@
                 console.log(jsonData);
                 $.get("/OAS/coDetails",{data:jsonData},function(result){
                     console.log("result :"+result);
+                    alert(result.message);
                 });
             }
             //TODO: Testing

@@ -13,6 +13,7 @@ public class setQuestionsServlet extends HttpServlet{
 
         JSONObject jo = new JSONObject();
         JSONParser parser = new JSONParser();
+        String msg = "done";
         try{
             Class.forName("com.mysql.jdbc.Driver");
             Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/course","test","test");
@@ -31,7 +32,7 @@ public class setQuestionsServlet extends HttpServlet{
             String section = (String)session.getAttribute("section");
             String assesment = (String)session.getAttribute("assesment");
             //?data={"subjectCode":"cs6545","assesment":"CT1","section":"A","department":"CSE","year":"III","questions":[{"qno":"1","co":"co2","mark":16}]}
-            PreparedStatement stmt = con.prepareStatement("INSERT into questions(subjectCode, assesment, section, department, year, questions) values(?, ?, ?, ?, ?)");
+            PreparedStatement stmt = con.prepareStatement("INSERT into questions(subjectCode, assesment, section, department, year, questions) values(?, ?, ?, ?, ?, ?)");
             stmt.setString(1, subjectCode);
             stmt.setString(2, assesment);
             stmt.setString(3, section);
@@ -46,9 +47,11 @@ public class setQuestionsServlet extends HttpServlet{
             stmt.executeUpdate();
 
         }catch(Exception e){
+            msg = "error";
             jo.put("error",e.toString());
         }
         //writing html in the stream
+        jo.put("message",msg);
         out.println(jo);
 
         out.close();//closing the stream
