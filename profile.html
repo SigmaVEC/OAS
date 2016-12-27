@@ -90,24 +90,6 @@
           </div>
         </div>
         <!-- -->
-        <!-- -->
-        <div class="field">
-          <label>Assesment</label>
-          <div class="ui fluid search selection dropdown" id="assesmentDropdown">
-            <i class="dropdown icon"></i>
-            <div class="default text">Select type of assesment</div>
-            <div class="menu">
-                <div class="item" data-value="ut1">UT1</div>
-                <div class="item" data-value="ct1">CT1</div>
-                <div class="item" data-value="ut2">UT2</div>
-                <div class="item" data-value="ct2">CT2</div>
-                <div class="item" data-value="modal">Modal</div>
-                <div class="item" data-value="other">Other Assesment</div>
-            </div>
-          </div>
-        </div>
-        <!-- -->
-
       <div class="fluid ui buttons">
         <button class="ui blue button" onclick="submit()">View</button>
 
@@ -126,7 +108,7 @@
         $('.ui.selection.dropdown').dropdown();
     });
     var height = $("body").innerHeight();
-    var hgt = height*0.10;
+    var hgt = height*0.20;
     //document.write(hgt);
     $('.margin').height(hgt);
     function submit(){

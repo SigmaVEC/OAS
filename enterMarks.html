@@ -23,9 +23,15 @@
             </div>
             <!-- nav bar ends-->
             <div class="margin"></div>
-            <div>
-                <input placeholder="Subject Code" id="subjectCode"></input>
-                <button onclick="getData()">Set</button>
+            <div class="ui form">
+                <div class="fields">
+                    <div class="field">
+                        <input placeholder="Subject Code" id="subjectCode"></input>
+                    </div>
+                    <div class="field">
+                        <button class="ui blue button" onclick="getData()">Set</button>
+                    </div>
+                </div>
             </div>
             <div>
                 <div id="excel"></div>
@@ -35,7 +41,7 @@
             </div>
             <div>
                 <br>
-                <button class="ui blue button" onclick="save()">Save</button>
+                <button class="ui green button" onclick="save()">Save</button>
 
             </div>
         </div>
