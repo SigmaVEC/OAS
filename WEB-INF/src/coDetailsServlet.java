@@ -26,13 +26,18 @@ public class coDetailsServlet extends HttpServlet{
             String subjectCode = (String) jo1.get("subjectCode");
             //?data={"subjectCode":"cs6545","coDetails":[{"cono":"co1","description":"co1 inplace","threshold":80,"target":70},{"cono":"co2","description":"co2 inplace","threshold":82,"target":72}]}
             PreparedStatement stmt = con.prepareStatement("INSERT into CODetails(subjectCode, cono, description, threshold, target) values(?, ?, ?, ?, ?)");
+            PreparedStatement stmt2 = con.prepareStatement("DELETE from CODetails where subjectCode = ? and  cono = ?");
             stmt.setString(1,subjectCode);
+            stmt2.setString(1,subjectCode);
             JSONArray ar = new JSONArray();
             Iterator<JSONObject> iterator = list.iterator();
             while (iterator.hasNext()) {
 
                 JSONObject t = iterator.next();
                 JSONObject temp = new JSONObject();
+                stmt2.setString(2, (String)t.get("cono"));
+                stmt2.executeUpdate();
+                
                 stmt.setString(2, (String)t.get("cono"));
                 stmt.setString(3, (String)t.get("description"));
                 stmt.setInt(4, ((Long)t.get("threshold")).intValue());

@@ -50,7 +50,7 @@ img{
 
 <!-- -->
 <h2>Subjects no:<span id="subNo">0</span></h2>
-<table class="ui collapsing table" >
+<table class="ui table" >
   <thead>
     <tr>
       <th>Course id</th>
@@ -70,9 +70,14 @@ img{
         </td>
       </tr-->
     </tbody>
+    <button class="ui green button" onclick="save()">Save</button>
 </table>
 <!-- -->
-
+<div>
+    <span id="currentLabel">Current Entry</span>
+    <table class="ui table" id = "currentTable">
+    </table>
+</div>
 </div>
 
 
@@ -99,19 +104,60 @@ img{
 		s = "";
 		for (i =0 ; i < count; i++){
 			s = s + `<tr><td>
-					<div class="ui input"><input type="text" placeholder="Course id `+(i+1)+`" id="courseid` + i + `" ></div>
+					<div class="ui input"><input type="text" placeholder="Course id `+(i+1)+`" id="courseId` + i + `" ></div>
 				</td>
                 <td>
-					<div class="ui input"><input type="text" placeholder="COurse name `+(i+1)+`" id="subject` + i + `" ></div>
+					<div class="ui input"><input type="text" placeholder="Course name `+(i+1)+`" id="courseName` + i + `" ></div>
 				</td>
 				<td>
-					<div class="ui input"><input type="text" placeholder="Faculty id `+(i+1)+`" id="faculty` + i + `" ></div>
+					<div class="ui input"><input type="text" placeholder="Faculty id `+(i+1)+`" id="facultyId` + i + `" ></div>
 				</td></tr>`
 		}
 
 		$("#tableBody").html(s);
 	}
+    $("#currentLabel").hide();
+    $.get("getTimetable",{},function(result){
+        if(result.message == "done"){
+            data = result.timetable;
+            s = "<thead><tr><th>Course Id</th><th>Course Name</th><th>Faculty</th><tbody>";
+            for ( i in data){
+                s = s + "<tr><td>"+data[i].subjectCode +"</td><td>"+ data[i].courseName + "</td><td>" + data[i].facultyId +"</td></tr>";
+            }
+            s = s + "</tbody>";
+            $("#currentTable").html(s);
+            $("#currentLabel").show();
+        }
+    });
+    function save(){
+        count = document.getElementById('count').value;
+        arr = [];
 
+        for ( i=0; i < count;i++){
+            obj = {};
+            ci = $("#courseId"+i).val();
+            fi = $("#facultyId"+i).val();
+            cn = $("#courseName"+i).val();
+            obj.courseName = cn;
+            obj.facultyId = fi;
+            obj.courseCode = ci;
+            arr.push(obj);
+        }
+        data = {};
+        data.facultyAssignment = arr;
+        console.log(data);
+        jsonData = JSON.stringify(data);
+        $.get("timetable",{data:jsonData},function(result){
+            //alert(result.message);
+            console.log(result);
+            if(result.message == "done"){
+                alert(result.message);
+            }else{
+                alert("Error saving try again");
+                console.log(result.error);
+            }
+        });
+    }
 
 </script>
 

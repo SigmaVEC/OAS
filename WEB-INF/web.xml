@@ -151,4 +151,13 @@
 		<servlet-name>getStudentExcel</servlet-name>
 		<url-pattern>/getStudentExcel</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>getTimetable</servlet-name>
+		<servlet-class>getTimetableServlet</servlet-class>
+	</servlet>
+    <servlet-mapping>
+		<servlet-name>getTimetable</servlet-name>
+		<url-pattern>/getTimetable</url-pattern>
+	</servlet-mapping>
 </web-app>

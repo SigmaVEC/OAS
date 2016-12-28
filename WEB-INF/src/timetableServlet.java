@@ -15,7 +15,9 @@ public class timetableServlet extends HttpServlet{
 
         JSONObject jo = new JSONObject();
         JSONParser parser = new JSONParser();
+        String msg = "done";
         try{
+
             Class.forName("com.mysql.jdbc.Driver");
             Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/course","test","test");
 
@@ -50,7 +52,9 @@ public class timetableServlet extends HttpServlet{
             stmt.close();
             con.close();
             */
+
             Object obj = parser.parse(jsonData);
+
             JSONObject jo1 = (JSONObject) obj;
 
             JSONArray list = (JSONArray) jo1.get("facultyAssignment");
@@ -59,14 +63,21 @@ public class timetableServlet extends HttpServlet{
             String department = (String) jo1.get("department");
             String year = (String) jo1.get("year");
             */
+
             String year = (String)session.getAttribute("year");
             String department = (String)session.getAttribute("department");
             String section = (String)session.getAttribute("section");
+
             //data={"section":"A","department":"CSE","year":"II","facultyAssignment":[{"courseCode":"cs6501","facultyId":"fc123"}]}
-            PreparedStatement stmt = con.prepareStatement("INSERT into timetable(section, department, year, subjectcode, facultyid) values(?, ?, ?, ?, ?)");
+            PreparedStatement stmt2 = con.prepareStatement("delete from timetable where section = ? and department = ? and year =? and subjectcode = ?");
+            PreparedStatement stmt = con.prepareStatement("INSERT into timetable(section, department, year, subjectcode, facultyid, courseName) values(?, ?, ?, ?, ?, ?)");
             stmt.setString(1,section);
             stmt.setString(2,department);
             stmt.setString(3,year);
+
+            stmt2.setString(1,section);
+            stmt2.setString(2,department);
+            stmt2.setString(3,year);
 
             JSONArray ar = new JSONArray();
             Iterator<JSONObject> iterator = list.iterator();
@@ -74,15 +85,21 @@ public class timetableServlet extends HttpServlet{
 
                 JSONObject t = iterator.next();
                 JSONObject temp = new JSONObject();
+                stmt2.setString(4, (String)t.get("courseCode"));
+                stmt2.executeUpdate();
+
                 stmt.setString(4, (String)t.get("courseCode"));
                 stmt.setString(5, (String)t.get("facultyId"));
+                stmt.setString(6, (String)t.get("courseName"));
                 stmt.executeUpdate();
             }
 
         }catch(Exception e){
+            msg = "error";
             jo.put("error",e.toString());
         }
         //writing html in the stream
+        jo.put("message",msg);
         out.println(jo);
 
         out.close();//closing the stream

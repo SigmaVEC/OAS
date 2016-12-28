@@ -48,7 +48,12 @@
             </div>
             <div class="margin"></div>
             <h3>Set Questions</h3>
-
+            <div class="ui">
+                <span id="oldQuesLabel">Previous Question</span>
+                <table class="ui celled table" id="oldQues">
+                </table>
+                <br>
+            </div>
             <!-- nav bar ends-->
             <div class="ui form">
                 <div class="fields">
@@ -63,10 +68,10 @@
                     </div>
                 </div>
             </div>
-            <table class="ui collapsing table" id="tableQues">
+            <table class="ui celled table" id="tableQues">
 
             </table>
-            <button class="ui green button" onclick="submit()">submit</button>
+            <button class="ui green button" onclick="submit()">Update Questions</button>
         </div>
         <script src="js/jquery-3.1.1.min.js"></script>
         <!--jquery should be loaded before sematic and your custom javascript -->
@@ -97,7 +102,24 @@
             qCount = 0;
             cooptionsarr = [];
             var coFlag = false;
+            $("#oldQuesLabel").hide();
             function set(){
+                $.get("getQuesAndStud", {subjectCode:$("#subjectCode").val()} , function(result){
+                    //console.log(result);
+                    if(result.message == "done"){
+                        q = result.questions.questions;
+                        //console.log(q);
+                        s = "<thead><tr><th>Qno</th><th>CO</th><th>mark</th><tbody>";
+
+                        for ( i in q){
+                            s = s + "<tr><td>" + q[i].qno + "</td><td>" + q[i].co + "</td><td>" + q[i].mark + "</td></tr>";
+                        }
+                        s = s + "</tbody>";
+                        //console.log(s);
+                        $("#oldQuesLabel").show();
+                        $("#oldQues").append(s);
+                    }
+                });
                 $.get("getCoDetails", {subjectCode:$("#subjectCode").val()} , function(result){
                     console.log(result);
                     if (result.co.length > 0 ){
