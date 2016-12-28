@@ -8,13 +8,22 @@
 
   <link rel="stylesheet" href="css/semantic.min.css"></link>
 <style>
+img{
+    margin-bottom:-30px;
+    margin-top:-30px;
+}
 
 </style>
 </head>
 <body>
 <div class="ui container">
-  <div class="ui stackable grey inverted top fixed massive labeld icon menu">
-    <div class="item">Project Name</div>
+  <div class="ui stackable olive top fixed massive labeld icon menu">
+    <div class="ui text menu">
+        <div class="item">
+            <img class="ui small bordered spaced image" src="images/vec.jpg">
+        </div>
+        <div class="item" style="font-size:30px;color:#29b6f6;">Outcome & Analysis</div>
+    </div>
   </div>
 
 <!-- nav bar-->
@@ -24,10 +33,7 @@
   <div class="centered sixteen wide mobile only eight wide tablet only six wide computer only column">
     <div class="ui container">
       <div class="ui form">
-        <div class="field">
-          <label>User Id</label>
-            <input name="id" id="userId" placeholder="Id" type="text">
-        </div>
+
         <div class="field">
           <label>User Type</label>
           <div class="ui fluid search selection dropdown">
@@ -39,7 +45,10 @@
                 <div class="item" data-value="fc">Faculty</div>
             </div>
           </div>
-
+      </div>
+      <div class="field">
+        <label>User Id</label>
+          <input name="id" id="userId" placeholder="Id" type="text">
       </div>
       <div class="field">
         <label>Password</label>

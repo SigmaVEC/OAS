@@ -19,18 +19,34 @@
         <link rel="stylesheet" href="css/semantic.min.css"></link>
          <link rel="stylesheet" media="screen" href="dist/handsontable.full.css">
         <style>
-
+        img{
+            margin-bottom:-10px;
+            margin-top:-10px;
+        }
         </style>
     </head>
     <body>
         <div class="ui container">
-            <div class="ui stackable grey inverted top fixed huge labeld icon menu">
-                <div class="item">Marks</div>
-                <div class="right icon menu">
-                    <a class="item">
-                        <i class="large red inverted sign out icon"></i>SignOut
-                    </a>
+            <div class="ui stackable olive top fixed huge labeld icon menu">
+                <div class="ui text menu">
+                    <div class="item">
+                        <img class="ui small bordered spaced image" src="images/vec.jpg">
+                    </div>
+                    <a class="item"></a>
+                    <div class="item">
+                        <span style="font-size:20px;color:#29b6f6;">Marks</span>
+
+                    </div>
+                    <a class="item" style="margin-left:850px;"></a>
+                    <div class="ui right item">
+                        <div class="menu">
+                            <a class="item">
+                              <i class="large red inverted sign out icon"></i><span style="font-size:20px;">SignOut</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
+
             </div>
             <!-- nav bar ends-->
             <div class="margin"></div>
