@@ -1,4 +1,4 @@
-<!DOCTYPE Html>
+!DOCTYPE Html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -24,25 +24,35 @@
 
 <!-- nav bar-->
 <div class="margin"></div>
+<div class="ui padded grid">
 
-<div class="field">
-      <label>Assesment</label>
-      <div class="ui fluid search selection dropdown" id="assesmentDropdown">
-        <i class="dropdown icon"></i>
-        <div class="default text">Select type of assesment</div>
-        <div class="menu">
-            <div class="item" data-value="ut1">UT1</div>
-            <div class="item" data-value="ct1">CT1</div>
-            <div class="item" data-value="ut2">UT2</div>
-            <div class="item" data-value="ct2">CT2</div>
-            <div class="item" data-value="modal">Modal</div>
-            <div class="item" data-value="other">Other Assesment</div>
-        </div>
+  <div class="centered sixteen wide mobile only eight wide tablet only six wide computer only column">
+    <div class="ui container">
+        <div class="ui form">
+        <div class="field">
+              <label>Assesment</label>
+              <div class="ui fluid search selection dropdown" id="assesmentDropdown">
+                <i class="dropdown icon"></i>
+                <div class="default text">Select type of assesment</div>
+                <div class="menu">
+                    <div class="item" data-value="ut1">UT1</div>
+                    <div class="item" data-value="ct1">CT1</div>
+                    <div class="item" data-value="ut2">UT2</div>
+                    <div class="item" data-value="ct2">CT2</div>
+                    <div class="item" data-value="modal">Modal</div>
+                    <div class="item" data-value="other">Other Assesment</div>
+                </div>
+              </div>
       </div>
-</div>
-<button class="ui green button" onclick="done()">Done</button>
-    <div class="ui very padded grid">
+      <center><button class="ui green button" onclick="done()">Done</button></center>
+        </div>
     </div>
+</div>
+</div>
+</div>
+
+
+
 
 <script src="js/jquery-3.1.1.min.js"></script>
 <!--jquery should be loaded before sematic and your custom javascript -->
