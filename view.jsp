@@ -89,11 +89,15 @@
 
                         $.get("getCoDetails", {subjectCode:$("#subjectCode").val()} , function(result){
                             console.log(result);
-                            for (i in result.co){
-                                CO[result.co[i].co] = result.co[i];
-                                console.log(result.co[i].co);
+                            if (result.co.length > 0 ){
+                                for (i in result.co){
+                                    CO[result.co[i].co] = result.co[i];
+                                    console.log(result.co[i].co);
+                                }
+                                calculate();
+                            } else {
+                                alert("CO not received");
                             }
-                            calculate();
                         });
 
                     });

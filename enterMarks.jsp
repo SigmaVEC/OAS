@@ -97,8 +97,10 @@
                     }
                     //console.log(columnHeaders);
                     $.get("getMarks",{subjectCode:$("#subjectCode").val()}, function(result){
-                        dataExcel = result.excel.data;
-                        dataCO = result.co;
+                        if (result.message == "done"){
+                            dataExcel = result.excel.data;
+                            dataCO = result.co;
+                        }
                         loadExcel();
                     });
 

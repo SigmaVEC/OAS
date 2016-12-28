@@ -42,6 +42,7 @@
                     </div>
                     <div class="field">
                         <input id="subjectCode" placeholder="Enter subject code"></input>
+                        <button class="ui green button" onclick="set()">set</button>
                     </div>
                 </div>
             </div>
@@ -77,7 +78,21 @@
                     $("#tableQues").append(h);
                 });
             qCount = 0;
-            cooptionsarr = ['co1','co2']
+            cooptionsarr = []
+            var coFlag = false;
+            function set(){
+                $.get("getCoDetails", {subjectCode:$("#subjectCode").val()} , function(result){
+                    console.log(result);
+                    if (result.co.length > 0 ){
+                        for (i in result.co){
+                            cooptionsarr.push(result.co[i].co);
+                        }
+                        coFlag = true;
+                    } else {
+                        alert("CO not received");
+                    }
+                });
+            }
             function getCoOptions(){
                 s = '';
                 for ( i in cooptionsarr){
@@ -86,6 +101,10 @@
                 return s;
             }
             function addNewQues(){
+                if (!coFlag){
+                    alert("Set Course id");
+                    return;
+                }
                 s = `<tr>
                     <td><div class="ui input"><input placeholder="qNo" id="qno`+qCount+`" value="q`+(qCount+1)+`"></div></td>
                     <td>
@@ -99,6 +118,10 @@
                 $("#tableQues").append(s);
             }
             function submit(){
+                if (!coFlag){
+                    alert("Set Course id");
+                    return;
+                }
                 //alert("s");
                 arr = [];
                 console.log("clicked");
