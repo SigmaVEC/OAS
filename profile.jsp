@@ -40,7 +40,18 @@ img{
 <!-- nav bar-->
 <div class="margin"></div>
 <div class="ui padded grid">
-  <div class="ui container"><h2>Hello&nbsp;<span>Username</span>!</h2></div>
+  <div class="ui container"><h2>Hello&nbsp;<span>
+      <%
+          String name = (String)session.getAttribute("name");
+          String role = (String)session.getAttribute("role");
+          if (role == null ){
+              response.setStatus(response.SC_MOVED_TEMPORARILY);
+              response.setHeader("Location", "index.html");
+          }else{
+              out.print(name);
+          }
+      %>
+  </span>!</h2></div>
   <div class="centered sixteen wide mobile only eight wide tablet only six wide computer only column">
     <div class="ui container">
       <div class="ui form">

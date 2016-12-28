@@ -4,7 +4,7 @@ import java.io.*;
 import java.sql.*;
 import org.json.simple.*;
 import org.json.simple.parser.*;
-public class getQuesAndStudServlet extends HttpServlet{
+public class getStudentExcelServlet extends HttpServlet{
     public void doGet(HttpServletRequest req,HttpServletResponse res) throws ServletException,IOException {
         res.setContentType("application/json");//setting the content type
         HttpSession session = req.getSession(true);
@@ -29,37 +29,22 @@ public class getQuesAndStudServlet extends HttpServlet{
             Class.forName("com.mysql.jdbc.Driver");
             Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/course","test","test");
 
-            PreparedStatement stmt = con.prepareStatement("select questions from questions where subjectCode = ? and assesment = ? and section = ? and  department = ? and year = ?");
-            stmt.setString(1, subjectCode);
-            stmt.setString(2, assesment);
-            stmt.setString(3, section);
-            stmt.setString(4, department);
-            stmt.setString(5, year);
+            PreparedStatement stmt = con.prepareStatement("select sid, name from students where section = ? and  department = ? and year = ?");
+            stmt.setString(1, section);
+            stmt.setString(2, department);
+            stmt.setString(3, year);
 
             ResultSet rs=stmt.executeQuery();
 
-            if(!rs.next()){
-                msg = "No Questions Found";
-            }else{
-
-                String ques = rs.getString(1);
-                Object obj = parser.parse(ques);
-                JSONObject jo1 = (JSONObject) obj;
-                jo.put("questions", jo1);
-
-                stmt = con.prepareStatement("select name from students where section = ? and  department = ? and year = ?");
-                stmt.setString(1, section);
-                stmt.setString(2, department);
-                stmt.setString(3, year);
-
-                rs=stmt.executeQuery();
-
-                JSONArray ar = new JSONArray();
-                while(rs.next()){
-                    ar.add(rs.getString(1));
-                }
-                jo.put("students",ar);
+            JSONArray ar = new JSONArray();
+            while(rs.next()){
+                JSONObject jo1 = new JSONObject();
+                jo1.put("sid",rs.getString(1));
+                jo1.put("name",rs.getString(2));
+                ar.add(jo1);
             }
+            jo.put("students",ar);
+
 
         }catch(Exception e){
             String s = e.toString();

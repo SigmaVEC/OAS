@@ -95,12 +95,13 @@
                     $("#tableQues").append(h);
                 });
             qCount = 0;
-            cooptionsarr = []
+            cooptionsarr = [];
             var coFlag = false;
             function set(){
                 $.get("getCoDetails", {subjectCode:$("#subjectCode").val()} , function(result){
                     console.log(result);
                     if (result.co.length > 0 ){
+                        cooptionsarr = [];
                         for (i in result.co){
                             cooptionsarr.push(result.co[i].co);
                         }

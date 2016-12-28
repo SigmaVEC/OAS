@@ -66,16 +66,27 @@
                 name:""
             }];
 
-            var container = document.getElementById('excel');
-            var hot = new Handsontable(container, {
-              data: data,
-              minSpareRows: 1,
-              rowHeaders: true,
-    		  autoWrapRow: true,
-    		  stretchH: "all",
-              colHeaders: columnHeaders,
-
+            $.get("getStudentExcel",{},function(result){
+                console.log(result);
+                if(result.message == "done"){
+                    if (result.students.length > 0)
+                        data = result.students;
+                }
+                excelDisp();
             });
+            var container = document.getElementById('excel');
+            var hot ;
+            function excelDisp(){
+                hot = new Handsontable(container, {
+                  data: data,
+                  minSpareRows: 1,
+                  rowHeaders: true,
+        		  autoWrapRow: true,
+        		  stretchH: "all",
+                  colHeaders: columnHeaders,
+
+                });
+            }
             function addStudents(){
                 obj = {};
 
@@ -83,11 +94,14 @@
                 //obj.department = "demmyD";
                 //obj.year = "dummyY"; //TODO:Change this
                 obj.data = hot.getSourceData();
+                if (obj.data.slice(-1)[0].sid == null)
+                    obj.data.pop();
                 jsonData = JSON.stringify(obj);
-                console.log(jsonData);
+                //console.log(jsonData);
 
                 $.get("addStudents",{"data":jsonData},function(result){
-                    alert(result);
+                    console.log(result);
+                    alert(result.message);
                 });
             }
         </script>

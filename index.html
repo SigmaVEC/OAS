@@ -87,7 +87,7 @@ $('.margin').height(hgt);
         $.get("/OAS/login",{ userId:userId,password:password },function(result){
             console.log(result);
             if(result.message == "Success"){
-                window.location = "/OAS/profile.html";
+                window.location = "profile.jsp";
             }else{
                 alert(result.message);
             }

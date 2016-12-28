@@ -14,6 +14,7 @@ public class addStudentsServlet extends HttpServlet{
 
         JSONObject jo = new JSONObject();
         JSONParser parser = new JSONParser();
+        String msg = "done";
         try{
             Class.forName("com.mysql.jdbc.Driver");
             Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/course","test","test");
@@ -31,11 +32,18 @@ public class addStudentsServlet extends HttpServlet{
             String department = (String)session.getAttribute("department");
             String section = (String)session.getAttribute("section");
             String year = (String)session.getAttribute("year");
-            PreparedStatement stmt = con.prepareStatement("INSERT into students(sid, name, section, department, year) values(?, ?, ?, ?, ?)");
+            PreparedStatement stmt = con.prepareStatement("DELETE from students where section = ? and department = ?and year = ?");
+
+            stmt.setString(1, section);
+            stmt.setString(2, department);
+            stmt.setString(3, year);
+            stmt.executeUpdate();
+            stmt = con.prepareStatement("INSERT into students(sid, name, section, department, year) values(?, ?, ?, ?, ?)");
 
             stmt.setString(3, section);
             stmt.setString(4, department);
             stmt.setString(5, year);
+
 
             Iterator<JSONObject> iterator = list.iterator();
             while (iterator.hasNext()) {
@@ -49,9 +57,11 @@ public class addStudentsServlet extends HttpServlet{
             }
 
         }catch(Exception e){
+            msg = "error";
             jo.put("error",e.toString());
         }
         //writing html in the stream
+        jo.put("message",msg);
         out.println(jo);
 
         out.close();//closing the stream

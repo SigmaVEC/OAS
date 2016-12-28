@@ -32,7 +32,26 @@ public class setQuestionsServlet extends HttpServlet{
             String section = (String)session.getAttribute("section");
             String assesment = (String)session.getAttribute("assesment");
             //?data={"subjectCode":"cs6545","assesment":"CT1","section":"A","department":"CSE","year":"III","questions":[{"qno":"1","co":"co2","mark":16}]}
-            PreparedStatement stmt = con.prepareStatement("INSERT into questions(subjectCode, assesment, section, department, year, questions) values(?, ?, ?, ?, ?, ?)");
+            PreparedStatement stmt = con.prepareStatement("select * from questions where subjectCode = ? and assesment = ? and section = ? and department = ? and year = ?");
+            stmt.setString(1, subjectCode);
+            stmt.setString(2, assesment);
+            stmt.setString(3, section);
+            stmt.setString(4, department);
+            stmt.setString(5, year);
+
+            ResultSet rs=stmt.executeQuery();
+            if(rs.next()){
+                stmt = con.prepareStatement("DELETE from questions where subjectCode = ? and assesment = ? and section = ? and department = ? and year = ?");
+                stmt.setString(1, subjectCode);
+                stmt.setString(2, assesment);
+                stmt.setString(3, section);
+                stmt.setString(4, department);
+                stmt.setString(5, year);
+
+                stmt.executeUpdate();
+            }
+
+            stmt = con.prepareStatement("INSERT into questions(subjectCode, assesment, section, department, year, questions) values(?, ?, ?, ?, ?, ?)");
             stmt.setString(1, subjectCode);
             stmt.setString(2, assesment);
             stmt.setString(3, section);

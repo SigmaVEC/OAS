@@ -142,4 +142,13 @@
 		<servlet-name>getCoDetails</servlet-name>
 		<url-pattern>/getCoDetails</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>getStudentExcel</servlet-name>
+		<servlet-class>getStudentExcelServlet</servlet-class>
+	</servlet>
+    <servlet-mapping>
+		<servlet-name>getStudentExcel</servlet-name>
+		<url-pattern>/getStudentExcel</url-pattern>
+	</servlet-mapping>
 </web-app>

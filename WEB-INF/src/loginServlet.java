@@ -32,6 +32,7 @@ public class loginServlet extends HttpServlet{
                     String role = rs.getString(3);
                     session.setAttribute("role",role);
                     session.setAttribute("userId",userId);
+                    session.setAttribute("name",name);
                     message = "Success";
                 }else {
                     message = "Try Again";
