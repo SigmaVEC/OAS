@@ -103,22 +103,27 @@
             students = [];
             function getData(){
                 $.get("getQuesAndStud", {subjectCode:$("#subjectCode").val()}, function(result){
-                    questions = result.questions.questions;
-                    students = result.students;
-                    console.log(result);
-                    //console.log(questions);
-                    columnHeaders = [];
-                    for (i in questions){
-                        columnHeaders.push(questions[i].qno+" ("+questions[i].mark+")");
-                    }
-                    //console.log(columnHeaders);
-                    $.get("getMarks",{subjectCode:$("#subjectCode").val()}, function(result){
-                        if (result.message == "done"){
-                            dataExcel = result.excel.data;
-                            dataCO = result.co;
+                    if (result.message == "done"){
+                        questions = result.questions.questions;
+                        students = result.students;
+                        console.log(result);
+                        //console.log(questions);
+                        columnHeaders = [];
+                        for (i in questions){
+                            columnHeaders.push(questions[i].qno+" ("+questions[i].mark+")");
                         }
-                        loadExcel();
-                    });
+                        //console.log(columnHeaders);
+                        $.get("getMarks",{subjectCode:$("#subjectCode").val()}, function(result){
+                            if (result.message == "done"){
+                                dataExcel = result.excel.data;
+                                dataCO = result.co;
+                            }
+                            loadExcel();
+                        });
+                    }else{
+                        alert("unable to retrive data");
+                        console.log(result.message);
+                    }
 
                 });
             }
@@ -144,6 +149,7 @@
                 });
             }
             var test;
+            max = {};
             function save(){
                 data = hot.getData();
                 obj = {};
@@ -151,8 +157,18 @@
                 jsonData = JSON.stringify(obj);
                 console.log(jsonData);
                 var objCo = {};
+
+                max = {};
+                for (j in questions ){
+                    if( typeof max[questions[j].co] == "undefined"){
+                        max[questions[j].co] = 0;
+                    }
+                    max[questions[j].co] = max[questions[j].co] + questions[j].mark;
+                }
+                objCo.maxMarks = max;
                 objCo.co = calculate();
                 jsonData1 = JSON.stringify(objCo);
+
                 $.get("saveMarks",{excelData:jsonData,coData:jsonData1, subjectCode:$("#subjectCode").val()}, function(result){
                     alert(result.message);
                     console.log(result.error);
@@ -161,6 +177,7 @@
             function calculate(){
                 data = hot.getData();
                 arr = [];
+
                 for ( i in data ){ //each row
                     obj = {};
                     if (typeof students[i] == "undefined")
@@ -177,7 +194,7 @@
                     arr.push(obj);
                 }
                 test = arr;
-                console.log(arr);
+                //console.log(arr);
                 //alert(arr); //TODO: display arr
                 displayTable(arr);
                 return arr;
@@ -191,10 +208,14 @@
                     //console.log(data[i].co);
                     cos = data[i].co;
                     for (j in cos){
-                        console.log(j);
+                        //console.log(j);
                         if (f)
                             h = h + "<td>"+ j + "</td>";
-                        s = s + '<td>'+ cos[j] +'</td>'
+                        p = +( ( (cos[j]/max[j]) * 100).toFixed(2));
+                        c = "";
+                        if (p > 100)
+                            c = "error";
+                        s = s + '<td class="'+c+'">'+ p +'</td>'
                     }
                     f = false;
                     s = s + "</tr>"

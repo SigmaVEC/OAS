@@ -52,7 +52,7 @@
 
             <div>
                 <br>
-                <table class="ui celled table" id="dispResult"></table>
+                <table class="ui celled blue table" id="dispResult"></table>
             </div>
             <div>
                 <br>
@@ -86,37 +86,47 @@
             columnHeaders = [];
             students = [];
             var CO = {};
+            var max = {};
             function getData(){
                 $.get("getQuesAndStud", {subjectCode:$("#subjectCode").val()}, function(result){
-                    questions = result.questions.questions;
-                    students = result.students;
-                    console.log(result);
-                    //console.log(questions);
-                    columnHeaders = [];
-                    for (i in questions){
-                        columnHeaders.push(questions[i].qno+" ("+questions[i].mark+")");
-                    }
-                    //console.log(columnHeaders);
-                    $.get("getMarks",{subjectCode:$("#subjectCode").val()}, function(result){
-                        dataExcel = result.excel.data;
-                        dataCO = result.co;
-                        //loadExcel();
+                    if (result.message == "done"){
+                        questions = result.questions.questions;
+                        students = result.students;
+                        console.log(result);
+                        //console.log(questions);
+                        columnHeaders = [];
+                        for (i in questions){
+                            columnHeaders.push(questions[i].qno+" ("+questions[i].mark+")");
+                        }
+                        //console.log(columnHeaders);
+                        $.get("getMarks",{subjectCode:$("#subjectCode").val()}, function(result){
+                            if (result.message == "done"){
+                                dataExcel = result.excel.data;
+                                dataCO = result.co;
+                                max = result.co.maxMarks;
+                                //loadExcel();
 
-                        $.get("getCoDetails", {subjectCode:$("#subjectCode").val()} , function(result){
-                            console.log(result);
-                            if (result.co.length > 0 ){
-                                for (i in result.co){
-                                    CO[result.co[i].co] = result.co[i];
-                                    console.log(result.co[i].co);
-                                }
-                                calculate();
-                            } else {
-                                alert("CO not received");
+                                $.get("getCoDetails", {subjectCode:$("#subjectCode").val()} , function(result){
+                                    console.log(result);
+                                    if (result.co.length > 0 ){
+                                        for (i in result.co){
+                                            CO[result.co[i].co] = result.co[i];
+                                            console.log(result.co[i].co);
+                                        }
+                                        calculate();
+                                    } else {
+                                        alert("CO not received");
+                                    }
+                                });
+                            }else{
+                                console.log(result.error);
+                                alert("cannot retrive marks")
                             }
                         });
-
-                    });
-
+                    }else{
+                        console.log(result.error);
+                        alert("cannot students and marks details")
+                    }
                 });
             }
 
@@ -157,10 +167,17 @@
                         console.log(j);
                         if (f)
                             h = h + "<td>"+ j + "</td>";
-                        color = ""
-                        if (CO[j].threshold > cos[j])
-                            color = "error"
-                        s = s + '<td class="'+color+'">'+ cos[j] +'</td>'
+
+                        c = "";
+                        e = "";
+                        p = +( ( (cos[j]/max[j]) * 100).toFixed(2));
+                        if ( CO[j].threshold > p)
+                            c = "error";
+                        if (p > 100){
+                            c = "warning";
+                            e = '<i class="attention icon"></i>';
+                        }
+                        s = s + '<td class="'+c+'">'+ e + p +'</td>'
                     }
                     f = false;
                     s = s + "</tr>"
