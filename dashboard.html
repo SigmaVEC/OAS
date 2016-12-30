@@ -22,8 +22,9 @@ img{
           <div class="item">
               <img class="ui small bordered spaced image" src="images/vec.jpg">
           </div>
+          <div class="item" style="font-size:30px;color:#29b6f6;margin-left:300px;">Outcome Analysis Software</div>
           <a class="item"></a>
-          <div class="ui pointing dropdown item">
+          <!--div class="ui pointing dropdown item">
               <span style="font-size:20px;color:#29b6f6;">Dashboard</span>
               <i class="dropdown icon"></i>
               <div class="menu">
@@ -39,44 +40,62 @@ img{
                   <div class="divider"></div>
                   <div class="item"><a href="addStudents.html">Add Students</a></div>
               </div>
-          </div>
-          <a class="item" style="margin-left:850px;"></a>
+          </div-->
+          <a class="item" style="margin-left:350px;"></a>
           <div class="ui right item">
               <div class="menu">
                   <a class="item">
-                    <i class="large red inverted sign out icon"></i><span style="font-size:20px;">SignOut</span>
+                    <span style="font-size:20px;">Admin</span><i class="large blue  user icon"></i>
                   </a>
               </div>
           </div>
       </div>
-     <!--div class="ui inline dropdown">
-              <div class="item">Dashboard<i class="dropdown icon"></i></div>
 
-                  <div class="menu">
-
-                </div>
-
-     </div-->
   </div>
 </div>
 
 <!-- nav bar-->
+
+
 <div class="margin"></div>
 
 
-    <div class="ui very padded grid">
+
+    <div class="ui grid">
+      <div class="four wide column">
+        <div class="ui vertical fluid tabular menu">
+          <a class="active item">Courses List</a>
+          <a class=" item">Students List</a>
+          <a class=" item">Course Outcome</a>
+          <a class=" item">Set Questions</a>
+          <a class=" item">Enter Marks</a>
+          <a class=" item">Results</a>
+          <a class=" item">Manage Users</a>
+
+        </div>
+      </div>
+      <div class="twelve wide stretched column">
+          <div class="ui segment" >
+            This segment will always match the tab height
+          </div>
+
+
+      </div>
     </div>
+
 
 <script src="js/jquery-3.1.1.min.js"></script>
 <!--jquery should be loaded before sematic and your custom javascript -->
 <script src="js/semantic.min.js"></script>
 
 <script>
+$('.tabular.menu.item').tab();
 $(document).ready(function() {
-    $('.ui.dropdown').dropdown();
+    //$('.ui.dropdown').dropdown();
+
 });
 var height = $("body").innerHeight();
-var hgt = height*0.30;
+var hgt = height*0.20;
 //document.write(hgt);
 $('.margin').height(hgt);
 </script>
