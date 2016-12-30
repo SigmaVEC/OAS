@@ -13,6 +13,7 @@ public class deleteServlet extends HttpServlet{
         JSONObject jo = new JSONObject();
         HttpSession session = req.getSession(true);
         String userRole = (String)session.getAttribute("role");
+        String msg = "done";
         if (userRole == null)
             userRole = "";
         if(userRole.equalsIgnoreCase("admin")){
@@ -29,12 +30,13 @@ public class deleteServlet extends HttpServlet{
                 stmt.close();
                 con.close();
             }catch(Exception e){
+                msg = "error";
                 jo.put("error", e.toString());
             }
         } else {
             jo.put("error","not authenticated");
         }
-
+        jo.put("message",msg);
         out.println(jo);
         out.close();//closing the stream
     }

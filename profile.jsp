@@ -56,20 +56,6 @@ img{
     <div class="ui container">
       <div class="ui form">
         <!-- -->
-        <div class="field">
-          <label>Academic Year</label>
-          <div class="ui fluid search selection dropdown" id="ayearDropdown">
-            <i class="dropdown icon"></i>
-            <div class="default text">Select academic year</div>
-            <div class="menu">
-                <div class="item" data-value="y1">2014-2015</div>
-                <div class="item" data-value="y1">2015-2016</div>
-                <div class="item" data-value="y3">2016-2017</div>
-                <div class="item" data-value="y4">2017-2018</div>
-            </div>
-          </div>
-        </div>
-        <!-- -->
         <!-- -->
         <div class="field">
           <label>Year Of Study</label>
@@ -139,16 +125,20 @@ img{
     $('.margin').height(hgt);
     function submit(){
         var obj={};
-        obj.ayear = $("#ayearDropdown").dropdown('get value');
+        //obj.ayear = $("#ayearDropdown").dropdown('get value');
         obj.year = $("#yearDropdown").dropdown('get value');
         obj.department = $("#departmentDropdown").dropdown('get value');
         obj.section = $("#sectionDropdown").dropdown('get value');
         console.log(obj);
         $.get("setSelections",obj,function(result){
+            console.log(result);
             if(result.message == "done"){
                 window.location = "dashboard.html";
+            }else if(result.message == "error"){
+                alert("please try again");
+                window.location = "index.html";
             }else{
-                alert(result.message);
+                window.location = "notassigned.html";
             }
         });
     }

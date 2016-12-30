@@ -71,7 +71,7 @@ img{
                   <div class="default text">Select Type Of User</div>
                   <div class="menu">
                       <div class="item" data-value="admin">Admin</div>
-                      <div class="item" data-value="hod">Hod</div>
+                      <div class="item" data-value="nc">NBA coordinator</div>
                       <div class="item" data-value="faculty">Faculty</div>
                   </div>
                 </div>
@@ -130,7 +130,7 @@ img{
                   <div class="default text">Select Type Of User</div>
                   <div class="menu">
                       <div class="item" data-value="admin">Admin</div>
-                      <div class="item" data-value="hod">Hod</div>
+                      <div class="item" data-value="nc">NBA coordinator</div>
                       <div class="item" data-value="faculty">Faculty</div>
                   </div>
                 </div>
@@ -196,7 +196,9 @@ img{
 <!--jquery should be loaded before sematic and your custom javascript -->
 <script src="js/semantic.min.js"></script>
 <script>
-
+$(document).ready(function() {
+    $('.ui.selection.dropdown').dropdown();
+});
 var height = $("body").innerHeight();
 var hgt = height*0.15;
 //document.write(hgt);
@@ -226,12 +228,18 @@ $('.tabular.menu .item').tab();
         var password = $("#updateName").val(); //TODO: insert a password and change it
         console.log("update clicked");
         $.get("/OAS/register",{userId:userId, name:name, password:password, mobile:phno, email:email, role:role, mode:"update"},function(result){
+            if(result.message == "done"){
+                alert("ok");
+            }
             console.log(result);
         });
     });
     $("#btnDeleteUser").on("click",function(){
         var userId = $("#deleteUserId").val();
         $.get("/OAS/delete",{userId:userId},function(result){
+            if(result.message == "done"){
+                alert("ok");
+            }
             console.log(result);
         });
     });

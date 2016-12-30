@@ -160,4 +160,13 @@
 		<servlet-name>getTimetable</servlet-name>
 		<url-pattern>/getTimetable</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>listCoForClass</servlet-name>
+		<servlet-class>listCoForClassServlet</servlet-class>
+	</servlet>
+    <servlet-mapping>
+		<servlet-name>listCoForClass</servlet-name>
+		<url-pattern>/listCoForClass</url-pattern>
+	</servlet-mapping>
 </web-app>
