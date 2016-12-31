@@ -22,38 +22,12 @@
             margin-bottom:-10px;
             margin-top:-10px;
         }
+        body{
+            padding:20px;
+        }
         </style>
     </head>
     <body>
-        <div class="ui container">
-            <div class="ui stackable olive top fixed huge labeld icon menu">
-                <div class="ui text menu">
-                    <div class="item">
-                        <img class="ui small bordered spaced image" src="images/vec.jpg">
-                    </div>
-                    <a class="item"></a>
-                    <div class="item">
-                        <span style="font-size:20px;color:#29b6f6;">Questions</span>
-
-                    </div>
-                    <a class="item" style="margin-left:900px;"></a>
-                    <div class="ui right item">
-                        <div class="menu">
-                            <a class="item">
-                              <i class="large red inverted sign out icon"></i><span style="font-size:20px;">SignOut</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="margin"></div>
-            <h3>Set Questions</h3>
-            <div class="ui">
-                <span id="oldQuesLabel">Previous Question</span>
-                <table class="ui celled table" id="oldQues">
-                </table>
-                <br>
-            </div>
             <!-- nav bar ends-->
             <div class="ui form">
                 <div class="fields">
@@ -72,7 +46,6 @@
 
             </table>
             <button class="ui green button" onclick="submit()">Update Questions</button>
-        </div>
         <script src="js/jquery-3.1.1.min.js"></script>
         <!--jquery should be loaded before sematic and your custom javascript -->
         <script src="js/semantic.min.js"></script>

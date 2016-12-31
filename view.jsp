@@ -23,35 +23,14 @@
             margin-bottom:-10px;
             margin-top:-10px;
         }
+        body{
+            padding:20px;
+        }
         </style>
     </head>
     <body>
-        <div class="ui container">
-            <div class="ui olive top fixed huge labeld icon menu">
-                <div class="ui text menu">
-                    <div class="item">
-                        <img class="ui small bordered spaced image" src="images/vec.jpg">
-                    </div>
-                    <a class="item"></a>
-                    <div class="item">
-                        <span style="font-size:20px;color:#29b6f6;">Marks</span>
-
-                    </div>
-                    <a class="item" style="margin-left:940px;"></a>
-                    <div class="ui right item">
-                        <div class="menu">
-                            <a class="item">
-                              <i class="large red inverted sign out icon"></i><span style="font-size:20px;">SignOut</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- nav bar ends-->
-            <div class="margin"></div>
 
             <div>
-                <br>
                 <table class="ui celled blue table" id="dispResult"></table>
             </div>
             <div>
