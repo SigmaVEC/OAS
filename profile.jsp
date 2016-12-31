@@ -133,7 +133,7 @@ img{
         $.get("setSelections",obj,function(result){
             console.log(result);
             if(result.message == "done"){
-                window.location = "dashboard.html";
+                window.location = "dashboard.jsp";
             }else if(result.message == "error"){
                 alert("please try again");
                 window.location = "index.html";

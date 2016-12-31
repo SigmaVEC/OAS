@@ -21,40 +21,38 @@ body{
 <body>
 <div class="ui container">
 
+<div id="entry">
+    <!-- -->
 
-<h3>Enter the number of subjects</h3>
-<div class="ui action input">
-  <input type="number" placeholder="count" name="num" id="count">
-  <button class="ui green button" onClick="call()">Go!</button>
+    <table class="ui table" >
+      <thead>
+        <tr>
+          <th>Course id</th>
+          <th>Course Name</th>
+          <th>Faculty id</th>
+        </tr>
+      </thead>
+        <tbody id="tableBody">
+          <!--tr>
+            <td>
+              <div class="ui input"><input type="text" placeholder="Subject name.." name="subject" >
+              </div>
+            </td>
+            <td>
+              <div class="ui input"><input type="text" placeholder="Faculty name.." name="faculty" >
+              </div>
+            </td>
+          </tr-->
+        </tbody>
+
+    </table>
+    <center>
+        <button class="ui green button" onclick="save()">Save</button>
+        <button class="ui green button" onClick="call()">Add new</button>
+    </center>
 </div>
-
-
 <!-- -->
-<h2>Subjects no:<span id="subNo">0</span></h2>
-<table class="ui table" >
-  <thead>
-    <tr>
-      <th>Course id</th>
-      <th>Course Name</th>
-      <th>Faculty id</th>
-    </tr>
-  </thead>
-    <tbody id="tableBody">
-      <!--tr>
-        <td>
-          <div class="ui input"><input type="text" placeholder="Subject name.." name="subject" >
-          </div>
-        </td>
-        <td>
-          <div class="ui input"><input type="text" placeholder="Faculty name.." name="faculty" >
-          </div>
-        </td>
-      </tr-->
-    </tbody>
-    <button class="ui green button" onclick="save()">Save</button>
-</table>
-<!-- -->
-<div>
+<div id="current">
     <span id="currentLabel">Current Entry</span>
     <table class="ui table" id = "currentTable">
     </table>
@@ -78,36 +76,49 @@ body{
 	$('.tabular.menu .item').tab();
 
 
+    count = 5;
 	function call(){
-		count = document.getElementById('count').value;
 		console.log(count); //debugging
-		$("#subNo").html(count); //display no of subject
-		s = "";
-		for (i =0 ; i < count; i++){
-			s = s + `<tr><td>
-					<div class="ui input"><input type="text" placeholder="Course id `+(i+1)+`" id="courseId` + i + `" ></div>
-				</td>
-                <td>
-					<div class="ui input"><input type="text" placeholder="Course name `+(i+1)+`" id="courseName` + i + `" ></div>
-				</td>
-				<td>
-					<div class="ui input"><input type="text" placeholder="Faculty id `+(i+1)+`" id="facultyId` + i + `" ></div>
-				</td></tr>`
-		}
 
-		$("#tableBody").html(s);
+		count++;
+        i = count - 1;
+		s = `<tr><td>
+				<div class="ui input"><input type="text" placeholder="Course id `+(i+1)+`" id="courseId` + i + `" ></div>
+			</td>
+            <td>
+				<div class="ui input"><input type="text" placeholder="Course name `+(i+1)+`" id="courseName` + i + `" ></div>
+			</td>
+			<td>
+				<div class="ui input"><input type="text" placeholder="Faculty id `+(i+1)+`" id="facultyId` + i + `" ></div>
+			</td></tr>`
+
+
+		$("#tableBody").append(s);
 	}
-    $("#currentLabel").hide();
+    function hideEntry(a){
+        if(a == true){
+            $("#entry").hide();
+            $("#current").show();
+        }else{
+            $("#entry").show();
+            $("#current").hide();
+        }
+    }
+    $("#current").hide();
     $.get("getTimetable",{},function(result){
         if(result.message == "done"){
             data = result.timetable;
-            s = "<thead><tr><th>Course Id</th><th>Course Name</th><th>Faculty</th><tbody>";
-            for ( i in data){
-                s = s + "<tr><td>"+data[i].subjectCode +"</td><td>"+ data[i].courseName + "</td><td>" + data[i].facultyId +"</td></tr>";
+            if (data.length > 0 ){
+                hideEntry(true);
+                s = "<thead><tr><th>Course Id</th><th>Course Name</th><th>Faculty</th><tbody>";
+                for ( i in data){
+                    s = s + "<tr><td>"+data[i].subjectCode +"</td><td>"+ data[i].courseName + "</td><td>" + data[i].facultyId +"</td></tr>";
+                }
+                s = s + "</tbody>";
+                $("#currentTable").html(s);
+            }else{
+
             }
-            s = s + "</tbody>";
-            $("#currentTable").html(s);
-            $("#currentLabel").show();
         }
     });
     function save(){
@@ -139,7 +150,22 @@ body{
             }
         });
     }
-
+    loadTable();
+    function loadTable(){
+        s = "";
+        for ( i = 0 ; i < 5; i++){
+            s = s + `<tr><td>
+    				<div class="ui input"><input type="text" placeholder="Course id `+(i+1)+`" id="courseId` + i + `" ></div>
+    			</td>
+                <td>
+    				<div class="ui input"><input type="text" placeholder="Course name `+(i+1)+`" id="courseName` + i + `" ></div>
+    			</td>
+    			<td>
+    				<div class="ui input"><input type="text" placeholder="Faculty id `+(i+1)+`" id="facultyId` + i + `" ></div>
+    			</td></tr>`
+        }
+        $("#tableBody").html(s);
+    }
 </script>
 
 </body>

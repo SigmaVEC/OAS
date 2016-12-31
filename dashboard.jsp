@@ -27,6 +27,7 @@ img{
 #frameBody{
     width: 100%;
     height: 100%;
+
     border: #E0E0E0 3px solid;
 }
 </style>
@@ -44,7 +45,7 @@ img{
           <div class="ui right item">
               <div class="menu">
                   <a class="item">
-                    <span style="font-size:20px;">Faculty</span><i class="large blue  user icon"></i>
+                    <span style="font-size:20px;">Admin</span><i class="large blue  user icon"></i>
                   </a>
               </div>
           </div>
@@ -65,26 +66,67 @@ img{
 
         <div class="ui vertical menu" id="sideMenu">
           <a class="active item" onclick="itemClick(this)" link="staffAssignment.html">Courses List</a>
-          <a class=" item" onclick="itemClick(this)" link="addStudents.html">Students List</a>
-          <a class=" item" onclick="itemClick(this)" link="couseOutcome.html">Course Outcome</a>
-          <a class=" item" onclick="itemClick(this)" link="setQuestions.jsp">Set Questions</a>
-          <a class=" item" onclick="itemClick(this)" link="enterMarks.jsp">Enter Marks</a>
-          <a class=" item" onclick="itemClick(this)" link="view.jsp">Results</a>
+          <a class=" item" onclick="itemClick(this)" link="addStudents.jsp">Students List</a>
           <a class=" item" onclick="itemClick(this)" link="management.html">Manage Users</a>
 
         </div>
       </div>
       <div class="thirteen wide stretched column">
-           <strong>
-               <div class="ui big breadcrumb">
-                   <a class="section">Home</a>
-                   <i class="divider"> > </i>
-                   <a class="section">Registration</a>
-                   <i class="divider"> > </i>
-                   <a class="section">Personal Information</a>
-               </div>
-           </strong>
-           <div style="height:5px"></div>
+
+              <div class="ui breadcrumb">
+                  <a class="section" href="profile.jsp">
+                      <%
+                          String year = (String)session.getAttribute("year");
+                          if (year != null){
+                              out.print("year : "+year);
+                          }
+                      %>
+                  </a>
+                  <i class="divider"> > </i>
+                  <a class="section" href="profile.jsp">
+                      <%
+                          String department = (String)session.getAttribute("department");
+                          if (department != null){
+                              out.print("department : "+department);
+                          }
+                      %>
+                  </a>
+                  <i class="divider"> > </i>
+                  <a class="section" href="profile.jsp">
+                      <%
+                          String section = (String)session.getAttribute("section");
+                          if (section != null){
+                              out.print("section : "+section);
+                          }
+                      %>
+                  </a>
+                  <!--i class="divider"> > </i>
+                  <a class="section">
+                      <%
+                          String course = (String)session.getAttribute("course");
+                          out.print("course : ");
+                          if (course != null){
+                              out.print(course);
+                          }else{
+                              out.print("<b>select</b>");
+                          }
+                      %>
+                  </a-->
+                  <!--i class="divider"> > </i>
+                  <a class="section">
+                      <%
+                          String assesment = (String)session.getAttribute("assesment");
+                          out.print("assesment : ");
+                          if (assesment != null){
+                              out.print(assesment);
+                          }else{
+                              out.print("<b>select</b>");
+                          }
+                      %>
+                  </a-->
+              </div>
+
+        <div style="height:5px"></div>
           <iframe id="frameBody" src=""></iframe>
       </div>
     </div>

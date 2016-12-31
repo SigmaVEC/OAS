@@ -17,7 +17,8 @@
         }
         </style>
     </head>
-    <body><br>
+    <body>
+        <div id="new">
             <div>
                 <div id="excel"></div>
             </div>
@@ -26,6 +27,25 @@
                     <button class="ui blue button" onclick="addStudents()">Upload</button>
                 </center>
             </div>
+        </div>
+        <div id="current">
+            <table class="ui green table">
+                <thead>
+                    <tr>
+                        <th>Registration number</th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody id="currentTableBody">
+                </tbody>
+            </table>
+            <%
+                String role = (String)session.getAttribute("role");
+                if (role.equalsIgnoreCase("admin")){
+                    out.print("<center><button class=\"ui blue button\" onclick=\"hideNew(false)\">Add New</button></center>");
+                }
+            %>
+
         </div>
         <script src="js/jquery-3.1.1.min.js"></script>
         <!--jquery should be loaded before sematic and your custom javascript -->
@@ -46,12 +66,36 @@
                 sid:"",
                 name:""
             }];
-
+            function hideNew(a){
+                if(a == true){
+                    $("#new").hide();
+                    $("#current").show();
+                }else{
+                    $("#new").show();
+                    $("#current").hide();
+                }
+            }
             $.get("getStudentExcel",{},function(result){
                 console.log(result);
                 if(result.message == "done"){
-                    if (result.students.length > 0)
-                        data = result.students;
+                    console.log(result.students.length )
+                    if (result.students.length > 0){
+                        data1 = result.students;
+                        s = "";
+                        for (i in data1){
+                            s = s + `
+                                <tr>
+                                    <td>`+ data1[i].sid +`</td>
+                                    <td>`+ data1[i].name +`</td>
+                                </tr>
+                            `;
+                        }
+                        $("#currentTableBody").html(s);
+                        hideNew(true);
+                    }else{
+                        hideNew(false);
+                        //disp new
+                    }
                 }
                 excelDisp();
             });

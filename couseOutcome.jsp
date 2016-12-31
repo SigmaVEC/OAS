@@ -17,17 +17,22 @@
         </style>
     </head>
     <body>
-
+            <div>course : <%
+            String course = (String)session.getAttribute("course");
+            if (course == null ){
+                response.setStatus(response.SC_MOVED_TEMPORARILY);
+                response.setHeader("Location", "errorSetCourse.jsp?url=courseOutcone.jsp");
+            }else{
+                out.print("<span id=\"courseCode\">"+course+"</span>");
+            }
+            %></div>
             <!-- nav bar ends-->
-            <h3>Click the Button to add New Course OutCome</h3>
+        <div id="new">
+            <h3>Click the Button to add New Course OutCome(to be changed)</h3>
             <div class="ui form">
                 <div class="fields">
                     <div class="field">
                         <button class="ui blue button" id ="head" onclick="addNewCo();">Add New</button>
-                    </div>
-                    <div class="field">
-                        <input id="subjectCode" placeholder="Enter subject code"></input>
-                        <button onclick="setCO()">set</button>
                     </div>
                 </div>
             </div>
@@ -35,8 +40,9 @@
 
             </table>
                 <button class="ui green button" onclick="submit()">submit</button>
-                <div id="coList">
-                </div>
+
+        </div>
+        <div id="coList">
         </div>
         <script src="js/jquery-3.1.1.min.js"></script>
         <!--jquery should be loaded before sematic and your custom javascript -->
@@ -66,7 +72,7 @@
                 $("#tableCo").append(h);
             });
 
-            function setCO(){
+            /*function setCO(){
                 $.get("listCoForClass",{},function(result){
                     if(result.message == "done"){
                         data = result.co;
@@ -95,7 +101,8 @@
                         console.log(result.error);
                     }
                 });
-            }
+            }*/
+
             function addNewCo(){
                 s = `<tr>
                     <td><div class="ui input"><input placeholder="coNo" id="cono`+coCount+`" value="co`+(coCount+1)+`"></div></td>
@@ -106,6 +113,28 @@
                 coCount++;
                 $("#tableCo").append(s);
             }
+            for( i = 0 ; i < 6 ; i++){
+                addNewCo();
+            }
+            $.get("listCoForCourse",{},function(result){
+                if(result.message == "done"){
+                    co1 = result.co;
+                    s = `<table class="ui table">
+                            <thead class="full-width">
+                            <tr><th colspan="4">`+$("#courseCode").html()+`</th></tr>
+                            </thead>`
+                    for (i in co1){
+                        des = co1[i].description;
+                        cno = co1[i].co;
+                        thr = co1[i].threshold;
+                        tar = co1[i].target;
+                        s = s +`<tr> <td>`+cno+`</td><td>`+des+`</td><td>`+thr+`</td><td>`+tar+`</td></tr>`;
+                    }
+                    s = s + "</table>";
+                    $("#coList").html(s);
+                    $("#new").hide();
+                }
+            });
             function submit(){
                 //alert("s");
                 arr = [];

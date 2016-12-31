@@ -13,6 +13,7 @@ public class setSelectionsServlet extends HttpServlet{
         String department = req.getParameter("department");
         String section = req.getParameter("section");
         String assesment = req.getParameter("assesment");
+        String course = req.getParameter("course");
         JSONObject jo = new JSONObject();
         String msg = "done";
         try{
@@ -29,6 +30,8 @@ public class setSelectionsServlet extends HttpServlet{
                 session.setAttribute("section", section);
             if (assesment != null)
                 session.setAttribute("assesment", assesment);
+            if (course != null)
+                session.setAttribute("course",course);
             String role1 = (String)session.getAttribute("role");
             if(role1.equals("faculty")){
                 PreparedStatement stmt = con.prepareStatement("select subjectCode from timetable where facultyid = ? and section = ? and department = ? and year = ?");
@@ -41,7 +44,7 @@ public class setSelectionsServlet extends HttpServlet{
                 JSONArray ar = new JSONArray();
                 boolean flag = true;
                 while(rs.next()){
-                    flag = true;
+                    flag = false;
                     String scode = rs.getString(1);
                     ar.add(scode);
                 }

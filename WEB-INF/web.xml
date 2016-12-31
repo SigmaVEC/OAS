@@ -169,4 +169,13 @@
 		<servlet-name>listCoForClass</servlet-name>
 		<url-pattern>/listCoForClass</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>listCoForCourse</servlet-name>
+		<servlet-class>listCoForCourse</servlet-class>
+	</servlet>
+    <servlet-mapping>
+		<servlet-name>listCoForCourse</servlet-name>
+		<url-pattern>/listCoForCourse</url-pattern>
+	</servlet-mapping>
 </web-app>
