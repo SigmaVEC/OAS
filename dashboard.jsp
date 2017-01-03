@@ -1,4 +1,11 @@
 <!DOCTYPE Html>
+<%
+    String role = (String)session.getAttribute("role");
+    if (role.equalsIgnoreCase("faculty")){
+        response.setStatus(response.SC_MOVED_TEMPORARILY);
+        response.setHeader("Location", "dashboardFaculty.jsp");
+    }
+%>
 <html>
 <head>
   <meta charset="utf-8">

@@ -122,7 +122,7 @@ body{
         }
     });
     function save(){
-        count = document.getElementById('count').value;
+        //count = document.getElementById('count').value;
         arr = [];
 
         for ( i=0; i < count;i++){
@@ -135,6 +135,7 @@ body{
             obj.courseCode = ci;
             arr.push(obj);
         }
+        console.log(arr);
         data = {};
         data.facultyAssignment = arr;
         console.log(data);
