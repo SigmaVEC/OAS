@@ -8,7 +8,9 @@ public class getCoDetailsServlet extends HttpServlet{
         res.setContentType("application/json");//setting the content type
         HttpSession session = req.getSession(true);
         PrintWriter out=res.getWriter();//get the stream to write the data
-        String subjectCode = req.getParameter("subjectCode");
+        //String subjectCode = req.getParameter("subjectCode");
+        String subjectCode = (String)session.getAttribute("course");
+
         JSONObject jo = new JSONObject();
 
         String msg = "done";

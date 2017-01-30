@@ -24,7 +24,7 @@ public class getMarksServlet extends HttpServlet{
         String msg = "done";
         if (userRole == null)
             userRole = "";
-        if(userRole.equalsIgnoreCase("admin")){
+        if(userRole.equalsIgnoreCase("admin") || userRole.equalsIgnoreCase("faculty")){
             try{
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/course","test","test");

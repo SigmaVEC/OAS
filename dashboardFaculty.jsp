@@ -64,13 +64,10 @@ img{
       <div class="three wide column" id="sidePlane">
 
         <div class="ui vertical menu" id="sideMenu">
-          <a class="active item" onclick="itemClick(this)" link="staffAssignment.html">Courses List</a>
-          <a class=" item" onclick="itemClick(this)" link="addStudents.html">Students List</a>
           <a class=" item" onclick="itemClick(this)" link="couseOutcome.jsp">Course Outcome</a>
           <a class=" item" onclick="itemClick(this)" link="setQuestions.jsp">Set Questions</a>
           <a class=" item" onclick="itemClick(this)" link="enterMarks.jsp">Enter Marks</a>
           <a class=" item" onclick="itemClick(this)" link="view.jsp">Results</a>
-          <a class=" item" onclick="itemClick(this)" link="management.html">Manage Users</a>
 
         </div>
       </div>

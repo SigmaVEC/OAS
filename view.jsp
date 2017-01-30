@@ -33,13 +33,20 @@
             <div>
                 <table class="ui celled blue table" id="dispResult"></table>
             </div>
+            <br>
+            <hr>
+            <br>
             <div>
+                <table class="ui celled blue table" id="dispResultTarget"></table>
+            </div>
+            <br>
+            <!--div>
                 <br>
                 <input placeholder="Subject Code" id="subjectCode"></input>
                 <button class="ui green button" onclick="getData()">submit</button>
 
-            </div>
-        </div>
+            </div-->
+
         <script src="js/jquery-3.1.1.min.js"></script>
         <!--jquery should be loaded before sematic and your custom javascript -->
         <script src="js/semantic.min.js"></script>
@@ -60,17 +67,20 @@
             var questions;
             var students;
             var dataExcel = [];
+            var numberOfStudents;
             var dataCO;
             questions = [{"qno":"1","co":"co2","mark":16},{"qno":"2","co":"co1","mark":16},{"qno":"3","co":"co2","mark":16},{"qno":"4","co":"co2","mark":10},{"qno":"5","co":"co2","mark":12}]
             columnHeaders = [];
             students = [];
             var CO = {};
             var max = {};
+            getData();
             function getData(){
-                $.get("getQuesAndStud", {subjectCode:$("#subjectCode").val()}, function(result){
+                $.get("getQuesAndStud", {subjectCode:"<% out.print((String)session.getAttribute("course")); %>"}, function(result){
                     if (result.message == "done"){
                         questions = result.questions.questions;
                         students = result.students;
+                        numberOfStudents = students.length;
                         console.log(result);
                         //console.log(questions);
                         columnHeaders = [];
@@ -78,14 +88,14 @@
                             columnHeaders.push(questions[i].qno+" ("+questions[i].mark+")");
                         }
                         //console.log(columnHeaders);
-                        $.get("getMarks",{subjectCode:$("#subjectCode").val()}, function(result){
+                        $.get("getMarks",{subjectCode:"<% out.print((String)session.getAttribute("course")); %>"}, function(result){
                             if (result.message == "done"){
                                 dataExcel = result.excel.data;
                                 dataCO = result.co;
                                 max = result.co.maxMarks;
                                 //loadExcel();
 
-                                $.get("getCoDetails", {subjectCode:$("#subjectCode").val()} , function(result){
+                                $.get("getCoDetails", {subjectCode:"<% out.print((String)session.getAttribute("course")); %>"} , function(result){
                                     console.log(result);
                                     if (result.co.length > 0 ){
                                         for (i in result.co){
@@ -138,29 +148,47 @@
                 s = "";
                 f = true;
                 h = "<thead><tr><td></td>";
+                coTarget = {};
                 for ( i in data){
                     s = s + '<tr><th>'+data[i].sid+'</th>';
                     //console.log(data[i].co);
                     cos = data[i].co;
                     for (j in cos){
-                        console.log(j);
-                        if (f)
+                        //console.log(j);
+                        if (f){
                             h = h + "<td>"+ j + "</td>";
-
+                            coTarget[j] = 0; //init to 0
+                        }
                         c = "";
                         e = "";
-                        p = +( ( (cos[j]/max[j]) * 100).toFixed(2));
-                        if ( CO[j].threshold > p)
+                        p =  (cos[j]/max[j]) * 100;
+
+                        if ( CO[j].threshold > p){
                             c = "error";
-                        if (p > 100){
+                        } else if (p > 100){
                             c = "warning";
                             e = '<i class="attention icon"></i>';
+                        }else {
+                            coTarget[j]++;
                         }
-                        s = s + '<td class="'+c+'">'+ e + p +'</td>'
+                        s = s + '<td class="'+c+'">'+ e + p.toFixed(2) +'</td>'
                     }
                     f = false;
                     s = s + "</tr>"
                 }
+                console.log(coTarget);
+                l = "<tr> <td>Students</td> <td>"+ numberOfStudents +"</td> </tr>";
+                for ( i in CO){
+                    p = coTarget[CO[i].co]/numberOfStudents *100;
+                    c = "";
+                    if (p <CO[i].target){
+                        console.log(p);
+                        c = "error";
+                    }
+                    l = l + '<tr> <td>'+CO[i].co+'</td> <td class="'+c+'">' + p.toFixed(2) +'</td></tr>'
+                    $("#dispResultTarget").html(l);
+                }
+
                 h = h + "</tr></thead>";
                 $("#dispResult").html(h+s);
             }

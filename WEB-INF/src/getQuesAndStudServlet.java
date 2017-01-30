@@ -16,7 +16,9 @@ public class getQuesAndStudServlet extends HttpServlet{
         String section = (String)session.getAttribute("section");
         String assesment = (String)session.getAttribute("assesment");
         String msg = "done";
-        String subjectCode = req.getParameter("subjectCode");
+        //String subjectCode = req.getParameter("subjectCode");
+        String subjectCode = (String)session.getAttribute("course");
+
         JSONObject jo = new JSONObject();
         JSONParser parser = new JSONParser();
         try{

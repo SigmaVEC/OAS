@@ -22,7 +22,9 @@ public class setQuestionsServlet extends HttpServlet{
             JSONObject jo1 = (JSONObject) obj;
 
             JSONArray list = (JSONArray) jo1.get("questions");
-            String subjectCode = (String) jo1.get("subjectCode");
+            //String subjectCode = (String) jo1.get("subjectCode");
+            String subjectCode = (String)session.getAttribute("course");
+
             /*String section = (String) jo1.get("section");
             String department = (String) jo1.get("department");
             String year = (String) jo1.get("year");

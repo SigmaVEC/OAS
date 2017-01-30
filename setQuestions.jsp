@@ -29,23 +29,30 @@
     </head>
     <body>
             <!-- nav bar ends-->
-            <div class="ui form">
-                <div class="fields">
-                    <div class="field">
-                        <button class="ui blue button" id="head" onclick="addNewQues()">Add New Question</button>
-                    </div>
-                    <div class="field">
-                        <input id="subjectCode" placeholder="Enter subject code"></input>
-                    </div>
-                    <div class="field">
-                        <button class="ui green button" onclick="set()">set</button>
+            <div id="new">
+                <div class="ui form">
+                    <div class="fields">
+                        <div class="field">
+                            <button class="ui blue button" id="head" onclick="addNewQues()">Add New Question</button>
+                        </div>
+                        <!--div class="field">
+                            <input id="subjectCode" placeholder="Enter subject code"></input>
+                        </div>
+                        <div class="field">
+                            <button class="ui green button" onclick="">set</button>
+                        </div-->
                     </div>
                 </div>
-            </div>
-            <table class="ui celled table" id="tableQues">
+                <table class="ui celled table" id="tableQues">
 
-            </table>
-            <button class="ui green button" onclick="submit()">Update Questions</button>
+                </table>
+                <button class="ui green button" onclick="submit()">Update Questions</button>
+            </div>
+            <div id="old">
+                <table class="ui celled table" id="oldQues">
+
+                </table>
+            </div>
         <script src="js/jquery-3.1.1.min.js"></script>
         <!--jquery should be loaded before sematic and your custom javascript -->
         <script src="js/semantic.min.js"></script>
@@ -76,9 +83,19 @@
             cooptionsarr = [];
             var coFlag = false;
             $("#oldQuesLabel").hide();
+            set();
+            function hideNew(a){
+                if(a){
+                    $("#new").hide();
+                    $("#old").show();
+                }else{
+                    $("#new").show();
+                    $("#old").hide();
+                }
+            }
             function set(){
-                $.get("getQuesAndStud", {subjectCode:$("#subjectCode").val()} , function(result){
-                    //console.log(result);
+                $.get("getQuesAndStud", {/*subjectCode:$("#subjectCode").val()*/} , function(result){
+                    console.log(result);
                     if(result.message == "done"){
                         q = result.questions.questions;
                         //console.log(q);
@@ -91,9 +108,12 @@
                         //console.log(s);
                         $("#oldQuesLabel").show();
                         $("#oldQues").append(s);
+                        hideNew(true);
+                    }else{
+                        hideNew(false);
                     }
                 });
-                $.get("getCoDetails", {subjectCode:$("#subjectCode").val()} , function(result){
+                $.get("getCoDetails", {/*subjectCode:$("#subjectCode").val()*/} , function(result){
                     console.log(result);
                     if (result.co.length > 0 ){
                         cooptionsarr = [];

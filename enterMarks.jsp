@@ -26,12 +26,19 @@
         body{
             padding:20px;
         }
+        #excel col.rowHeader {
+    width: 180px;
+}
+table.htCore > tbody th{
+  text-align: left;
+  min-width: 230px;
+}
         </style>
     </head>
     <body>
 
             <!-- nav bar ends-->
-            <div class="ui form">
+            <!--div class="ui form">
                 <div class="fields">
                     <div class="field">
                         <input placeholder="Subject Code" id="subjectCode"></input>
@@ -40,7 +47,7 @@
                         <button class="ui blue button" onclick="getData()">Set</button>
                     </div>
                 </div>
-            </div>
+            </div-->
             <div>
                 <div id="excel"></div>
             </div>
@@ -82,8 +89,10 @@
             questions = [{"qno":"1","co":"co2","mark":16},{"qno":"2","co":"co1","mark":16},{"qno":"3","co":"co2","mark":16},{"qno":"4","co":"co2","mark":10},{"qno":"5","co":"co2","mark":12}]
             columnHeaders = [];
             students = [];
+
+            getData();
             function getData(){
-                $.get("getQuesAndStud", {subjectCode:$("#subjectCode").val()}, function(result){
+                $.get("getQuesAndStud", {subjectCode:"<% out.print((String)session.getAttribute("course")); %>"}, function(result){
                     if (result.message == "done"){
                         questions = result.questions.questions;
                         students = result.students;
@@ -94,7 +103,7 @@
                             columnHeaders.push(questions[i].qno+" ("+questions[i].mark+")");
                         }
                         //console.log(columnHeaders);
-                        $.get("getMarks",{subjectCode:$("#subjectCode").val()}, function(result){
+                        $.get("getMarks",{subjectCode:"<% out.print((String)session.getAttribute("course")); %>"}, function(result){
                             if (result.message == "done"){
                                 dataExcel = result.excel.data;
                                 dataCO = result.co;
@@ -150,7 +159,7 @@
                 objCo.co = calculate();
                 jsonData1 = JSON.stringify(objCo);
 
-                $.get("saveMarks",{excelData:jsonData,coData:jsonData1, subjectCode:$("#subjectCode").val()}, function(result){
+                $.get("saveMarks",{excelData:jsonData,coData:jsonData1, subjectCode:"<% out.print((String)session.getAttribute("course")); %>"}, function(result){
                     alert(result.message);
                     console.log(result.error);
                 });
